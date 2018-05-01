@@ -2,5 +2,26 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  text-align: center;
-}
+  text-align: center; }
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; }
+
+.sketcher {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background: #e4e4e4; }
+  .sketcher .tool-menu {
+    background: #c0d6ff; }
+    .sketcher .tool-menu > li i {
+      margin: 4px 4px 0 4px;
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 3px;
+      cursor: pointer;
+      background: pink; }
+  .sketcher .tool-customize-menu {
+    background: #ffd7c0; }

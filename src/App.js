@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Sketcher from './SketcherCntr';
+import Sketcher from './containers/SketcherCntr';
 
 class App extends Component {
   render() {
