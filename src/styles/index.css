@@ -1,3 +1,4 @@
+/*  Base  */
 body {
   margin: 0;
   padding: 0;
@@ -9,19 +10,26 @@ ul {
   padding: 0;
   list-style-type: none; }
 
+/*  Components  */
 .sketcher {
   display: flex;
-  width: 100vw;
-  height: 100vh;
   background: #e4e4e4; }
   .sketcher .tool-menu {
     background: #c0d6ff; }
-    .sketcher .tool-menu > li i {
+    .sketcher .tool-menu > li {
       margin: 4px 4px 0 4px;
       padding: 10px;
       box-sizing: border-box;
+      border: 2px solid transparent;
       border-radius: 3px;
-      cursor: pointer;
-      background: pink; }
+      color: #f0f0f0;
+      background: #b68990;
+      cursor: pointer; }
+      .sketcher .tool-menu > li:hover {
+        border-color: #fff; }
   .sketcher .tool-customize-menu {
     background: #ffd7c0; }
+  .sketcher canvas {
+    border: 2px solid gray;
+    border-radius: 5px;
+    background: #fff; }

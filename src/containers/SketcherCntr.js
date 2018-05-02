@@ -13,6 +13,15 @@ class SketcherCntr extends Component {
     }
   }
 
+  componentDidMount () {
+    // A reference to the canvas
+    const canvas = this.refs.canvas;
+
+    // The size of the canvas
+    canvas.width = 400;
+    canvas.height = 400;
+}
+
   handleChange = (property, value) => {
     this.setState({ [property]: value });
   }
@@ -25,6 +34,27 @@ class SketcherCntr extends Component {
     });
   }
 
+  renderBrush = (e) => {
+    const { brushRadius } = this.state;
+
+    // A reference to the canvas to get the context
+    const context = this.refs.canvas.getContext('2d');
+    
+    // Mouse position
+    const x = e.nativeEvent.offsetX,
+          y = e.nativeEvent.offsetY;
+
+    // The beginPath method beigns a path and resets the current path
+    context.beginPath();
+    
+    // context.arc(x, y, radius, startAngle, endAngle, [antiClockwise]);
+    context.arc(x, y, brushRadius, 0, 2 * Math.PI);
+
+    // Stroke color
+    // context.strokeStyle = 'slateblue';
+    context.stroke();
+  }
+
   render() {
     const { brush, eraser, colorPicker, brushRadius, eraserRadius } = this.state;
 
@@ -32,10 +62,12 @@ class SketcherCntr extends Component {
       <Sketcher brush={ brush }
                 eraser={ eraser }
                 colorPicker={ colorPicker }
-                brushRadius={ brushRadius }
-                eraserRadius={ eraserRadius }
+                brushRadius={ parseInt(brushRadius, 10) }
+                eraserRadius={ parseInt(eraserRadius, 10) }
                 handleChange={ this.handleChange }
-                handleToolChange={ this.handleToolChange } />
+                handleToolChange={ this.handleToolChange }>
+        <canvas ref="canvas" onMouseMove={ this.renderBrush }/>
+      </Sketcher>
     );
   }
 }

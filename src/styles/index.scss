@@ -1,3 +1,18 @@
-@import 'base';
+/*  Base  */
 
-@import 'Sketcher';
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    text-align: center;
+  }
+  
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+/*  Components  */
+
+@import 'components/Sketcher';

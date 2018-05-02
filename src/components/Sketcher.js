@@ -11,26 +11,28 @@ const Sketcher = (props) => {
     handleChange, 
     handleToolChange
   } = props;
-  console.log('Brush Selected', brush);
-  console.log('Eraser Selected', eraser);
-  console.log('ColorPicker Selected', colorPicker);
+  // console.log('Brush Selected', brush);
+  // console.log('Eraser Selected', eraser);
+  // console.log('ColorPicker Selected', colorPicker);
 
   return (
     <div className="sketcher">
       <ul className="tool-menu">
-        <li onClick={() => handleToolChange('brush')}><i className="fas fa-paint-brush"></i></li>
-        <li onClick={() => handleToolChange('eraser')}><i className="fas fa-eraser"></i></li>
-        <li onClick={() => handleToolChange('colorPicker')}><i className="fas fa-eye-dropper"></i></li>
+        <li className="fas fa-paint-brush" onClick={() => handleToolChange('brush')}></li>
+        <li className="fas fa-eraser" onClick={() => handleToolChange('eraser')}></li>
+        <li className="fas fa-eye-dropper" onClick={() => handleToolChange('colorPicker')}></li>
       </ul>
 
       <div className="tool-customize-menu">
         Brush Radius:
         <input type="range" value={ brushRadius } onChange={(e) => handleChange('brushRadius', e.target.value)}/>
         { brushRadius }
-        Eraser Radius:
+        {/* Eraser Radius:
         <input type="range" value={ eraserRadius } onChange={(e) => handleChange('eraserRadius', e.target.value)}/>
-        { eraserRadius }
+        { eraserRadius } */}
       </div>
+
+      { /* The canvas */ props.children }
     </div>
   );
 }
