@@ -3,17 +3,12 @@ import PropTypes from 'prop-types';
 
 const Sketcher = (props) => {
   const {
+    toolSelected,
     brush, 
-    eraser, 
-    colorPicker, 
-    brushRadius, 
-    eraserRadius, 
+    eraser,
     handleChange, 
     handleToolChange
   } = props;
-  // console.log('Brush Selected', brush);
-  // console.log('Eraser Selected', eraser);
-  // console.log('ColorPicker Selected', colorPicker);
 
   return (
     <div className="sketcher">
@@ -25,24 +20,19 @@ const Sketcher = (props) => {
 
       <div className="tool-customize-menu">
         Brush Radius:
-        <input type="range" value={ brushRadius } onChange={(e) => handleChange('brushRadius', e.target.value)}/>
-        { brushRadius }
-        {/* Eraser Radius:
-        <input type="range" value={ eraserRadius } onChange={(e) => handleChange('eraserRadius', e.target.value)}/>
-        { eraserRadius } */}
+        <input type="range" value={ brush.radius } onChange={(e) => handleChange('brushRadius', e.target.value)}/>
+        { brush.radius }
       </div>
 
-      { /* The canvas */ props.children }
+      { props.children /* The canvas */  }
     </div>
   );
 }
 
 Sketcher.propTypes = {
-  brush: PropTypes.bool.isRequired, 
-  eraser: PropTypes.bool.isRequired, 
-  colorPicker: PropTypes.bool.isRequired, 
-  brushRadius: PropTypes.number.isRequired, 
-  eraserRadius: PropTypes.number.isRequired, 
+  toolSelected: PropTypes.object.isRequired,
+  brush: PropTypes.object.isRequired, 
+  eraser: PropTypes.object.isRequired, 
   handleChange: PropTypes.func.isRequired, 
   handleToolChange: PropTypes.func.isRequired
 }

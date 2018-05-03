@@ -5,11 +5,19 @@ class SketcherCntr extends Component {
   constructor () {
     super();
     this.state = {
-      brush: true,
-      eraser: false,
-      colorPicker: false,
-      brushRadius: 5,
-      eraserRadius: 5,
+      toolSelected: {
+        brush: true,
+        eraser: false,
+        colorPicker: false
+      },
+      brush: {
+        radius: 5,
+        color: '#000'
+      },
+      eraser: {
+        radius: 5,
+        color: '#fff'
+      },
       dragging: false
     }
   }
@@ -17,7 +25,6 @@ class SketcherCntr extends Component {
   componentDidMount () {
     // A reference to the canvas
     const canvas = this.refs.canvas;
-    console.log(canvas.getContext('2d'));
 
     // The size of the canvas
     canvas.width = 400;
@@ -30,9 +37,11 @@ class SketcherCntr extends Component {
 
   handleToolChange = (property) => {
     this.setState({
-      brush: property === 'brush' ? true : false,
-      eraser: property === 'eraser' ? true : false,
-      colorPicker: property === 'colorPicker' ? true : false
+      toolSelected: {
+        brush: property === 'brush' ? true : false,
+        eraser: property === 'eraser' ? true : false,
+        colorPicker: property === 'colorPicker' ? true : false
+      }
     });
   }
 
@@ -43,9 +52,8 @@ class SketcherCntr extends Component {
     this.putPoint(e, false);
   }
 
-  // The click parameter is needed so a point is drawn without dragging the mouse
-  putPoint = (e, click) => {
-    const { brushRadius } = this.state;
+  putPoint = (e, click) => {  // The click parameter is needed so a point is drawn without dragging the mouse
+    const { brush, dragging } = this.state;
 
     // A reference to the canvas to get the context
     const context = this.refs.canvas.getContext('2d');
@@ -54,22 +62,22 @@ class SketcherCntr extends Component {
     const x = e.nativeEvent.offsetX,
           y = e.nativeEvent.offsetY;
     
-    if ( this.state.dragging || click ) {
-      context.lineWidth = brushRadius * 2;
+    if ( dragging || click ) {
+      context.lineWidth = brush.radius * 2;
       context.lineCap = 'round';
 
       // 
       context.lineTo(x, y);
 
       // The stroke method draws the path defined by lineTo and moveTo
-      context.strokeStyle = 'slateblue';
+      context.strokeStyle = brush.color;
       context.stroke();
       
       // A circle is created using the arc method. The start and end angles make the arc a circle. 2*PI is one cycle around a circle in radians. 
-      context.arc(x, y, brushRadius, 0, 2 * Math.PI);  // context.arc(x, y, radius, startAngle, endAngle, [antiClockwise]);
+      context.arc(x, y, brush.radius, 0, 2 * Math.PI);  // context.arc(x, y, radius, startAngle, endAngle, [antiClockwise]);
 
       // Fills the circle with a color (without fillStyle the color is black by default)
-      context.fillStyle = 'slateblue';
+      context.fillStyle = brush.color;
       context.fill();
 
       // The path is reset
@@ -80,9 +88,10 @@ class SketcherCntr extends Component {
     }
   }
 
-  // If the mouse is out the canvas the path will disconnect
   resetPath = () => {
     const context = this.refs.canvas.getContext('2d');
+    
+    // The path is reset
     context.beginPath();
   }
 
@@ -96,7 +105,7 @@ class SketcherCntr extends Component {
 
   // renderBrush = (e) => {
   //   // this.resetPath();
-  //   const { brushRadius } = this.state;
+  //   const { brush } = this.state;
 
   //   // A reference to the canvas to get the context
   //   const context = this.refs.canvas.getContext('2d');
@@ -113,7 +122,7 @@ class SketcherCntr extends Component {
   //   context.beginPath();
     
   //   // context.arc(x, y, radius, startAngle, endAngle, [antiClockwise]);
-  //   context.arc(x, y, brushRadius, 0, 2 * Math.PI);
+  //   context.arc(x, y, brush.radius, 0, 2 * Math.PI);
 
   //   // Stroke color
   //   context.strokeStyle = 'blue';
@@ -121,14 +130,12 @@ class SketcherCntr extends Component {
   // }
 
   render() {
-    const { brush, eraser, colorPicker, brushRadius, eraserRadius } = this.state;
+    const { toolSelected, brush, eraser } = this.state;
 
     return (
-      <Sketcher brush={ brush }
+      <Sketcher toolSelected={ toolSelected }
+                brush={ brush }
                 eraser={ eraser }
-                colorPicker={ colorPicker }
-                brushRadius={ parseInt(brushRadius, 10) }
-                eraserRadius={ parseInt(eraserRadius, 10) }
                 handleChange={ this.handleChange }
                 handleToolChange={ this.handleToolChange }>
 
