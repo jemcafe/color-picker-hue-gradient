@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Aux from '../hoc/Aux';
 
 const Sketcher = (props) => {
   const {
@@ -7,7 +8,8 @@ const Sketcher = (props) => {
     brush, 
     eraser,
     handleChange, 
-    handleToolChange
+    handleToolChange,
+    handleBrushSettings
   } = props;
 
   return (
@@ -19,9 +21,19 @@ const Sketcher = (props) => {
       </ul>
 
       <div className="tool-customize-menu">
-        Brush Radius:
-        <input type="range" value={ brush.radius } onChange={(e) => handleChange('brushRadius', e.target.value)}/>
-        { brush.radius }
+        { toolSelected.brush &&
+          <Aux>
+            Brush Radius:
+            <input type="range" value={ brush.radius } onChange={(e) => handleBrushSettings('brush', 'radius', e.target.value)}/>
+            { brush.radius }
+          </Aux> }
+
+        { toolSelected.eraser &&
+          <Aux>
+            Eraser Radius:
+            <input type="range" value={ eraser.radius } onChange={(e) => handleBrushSettings('eraser', 'radius', e.target.value)}/>
+            { eraser.radius }
+          </Aux> }
       </div>
 
       { props.children /* The canvas */  }
@@ -34,7 +46,8 @@ Sketcher.propTypes = {
   brush: PropTypes.object.isRequired, 
   eraser: PropTypes.object.isRequired, 
   handleChange: PropTypes.func.isRequired, 
-  handleToolChange: PropTypes.func.isRequired
+  handleToolChange: PropTypes.func.isRequired,
+  handleBrushSettings: PropTypes.func.isRequired,
 }
 
 export default Sketcher;

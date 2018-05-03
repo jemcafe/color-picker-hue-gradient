@@ -35,14 +35,23 @@ class SketcherCntr extends Component {
     this.setState({ [property]: value });
   }
 
-  handleToolChange = (property) => {
+  handleToolChange = (tool) => {
     this.setState({
       toolSelected: {
-        brush: property === 'brush' ? true : false,
-        eraser: property === 'eraser' ? true : false,
-        colorPicker: property === 'colorPicker' ? true : false
+        brush: tool === 'brush' ? true : false,
+        eraser: tool === 'eraser' ? true : false,
+        colorPicker: tool === 'colorPicker' ? true : false
       }
     });
+  }
+
+  handleBrushSettings = (tool, property, value) => {
+    this.setState(prevState => ({
+      [tool]: {
+        radius: property === 'radius' ? value : prevState[tool].radius,
+        color: property === 'color' ? value : prevState[tool].color
+      }
+    }));
   }
 
   engage = (e) => {
@@ -137,11 +146,13 @@ class SketcherCntr extends Component {
                 brush={ brush }
                 eraser={ eraser }
                 handleChange={ this.handleChange }
-                handleToolChange={ this.handleToolChange }>
+                handleToolChange={ this.handleToolChange }
+                handleBrushSettings={ this.handleBrushSettings}>
 
         <canvas ref="canvas" 
                 onMouseDown={ this.engage } 
                 onMouseMove={ (e) => this.putPoint(e, false) }
+                // onMouseMove={ this.renderBrush }
                 onMouseOut={ this.resetPath }
                 onMouseUp={ this.disengage }/>
       </Sketcher>
