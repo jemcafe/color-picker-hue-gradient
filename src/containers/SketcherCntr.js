@@ -142,7 +142,6 @@ class SketcherCntr extends Component {
         <canvas ref="canvas" 
                 onMouseDown={ this.engage } 
                 onMouseMove={ (e) => this.putPoint(e, false) }
-                onMouseMove={ this.renderBrush }
                 onMouseOut={ this.resetPath }
                 onMouseUp={ this.disengage }/>
       </Sketcher>
