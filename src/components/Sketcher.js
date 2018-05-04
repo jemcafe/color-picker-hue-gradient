@@ -7,6 +7,7 @@ const Sketcher = (props) => {
     toolSelected,
     brush, 
     eraser,
+    colorPicker,
     handleChange, 
     handleToolChange,
     handleBrushSettings
@@ -14,12 +15,6 @@ const Sketcher = (props) => {
 
   return (
     <div className="sketcher">
-      <ul className="tool-menu">
-        <li className="fas fa-paint-brush" onClick={() => handleToolChange('brush')}></li>
-        <li className="fas fa-eraser" onClick={() => handleToolChange('eraser')}></li>
-        <li className="fas fa-eye-dropper" onClick={() => handleToolChange('colorPicker')}></li>
-      </ul>
-
       <div className="tool-customize-menu">
         { toolSelected.brush &&
           <Aux>
@@ -36,15 +31,25 @@ const Sketcher = (props) => {
           </Aux> }
       </div>
 
-      { props.children /* The canvas */  }
+      <div className="tools-canvas">
+        <ul className="tool-menu">
+          <li className="fas fa-paint-brush" onClick={() => handleToolChange('brush')}></li>
+          <li className="fas fa-eraser" onClick={() => handleToolChange('eraser')}></li>
+          <li className="fas fa-eye-dropper" onClick={() => handleToolChange('colorPicker')}></li>
+          <div style={{width:'50px', height:'50px', background: colorPicker.color}}></div>
+        </ul>
+
+        { props.children /* The canvas */  }
+      </div>
     </div>
   );
 }
 
 Sketcher.propTypes = {
   toolSelected: PropTypes.object.isRequired,
-  brush: PropTypes.object.isRequired, 
-  eraser: PropTypes.object.isRequired, 
+  brush: PropTypes.object.isRequired,
+  eraser: PropTypes.object.isRequired,
+  colorPicker: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired, 
   handleToolChange: PropTypes.func.isRequired,
   handleBrushSettings: PropTypes.func.isRequired,
