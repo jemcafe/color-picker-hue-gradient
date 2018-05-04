@@ -154,6 +154,10 @@ class SketcherCntr extends Component {
     console.log('Image Data', imgData);
     console.log('Hex color', hexColor);
 
+    // The colorPicker's color is changed
+    this.setState({ colorPicker: { color: hexColor } });
+    
+    // The brush's color is changed
     this.handleBrushSettings('brush', 'color', hexColor);
   }
 
