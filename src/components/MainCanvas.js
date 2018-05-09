@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class MainCanvas extends Component {
 
@@ -38,5 +39,12 @@ class MainCanvas extends Component {
       );
    }
 }
+
+MainCanvas.propTypes = {
+   engage: PropTypes.func.isRequired,
+   putPoint: PropTypes.func.isRequired,
+   resetPath: PropTypes.func.isRequired,
+   disengage: PropTypes.func.isRequired
+ }
 
 export default MainCanvas;

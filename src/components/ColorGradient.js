@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Aux from '../hoc/Aux';
 
 class ColorGradient extends Component {
@@ -32,7 +33,7 @@ class ColorGradient extends Component {
    }
 
    render () {
-      const { getColor, handleGradientHueChange } = this.props;
+      const { colorGradientHue, getColor, handleGradientHueChange } = this.props;
 
       return (
          <div className="color-gradient">
@@ -45,5 +46,11 @@ class ColorGradient extends Component {
       );
    }
 }
+
+ColorGradient.propTypes = {
+   colorGradientHue: PropTypes.object.isRequired,
+   getColor: PropTypes.func.isRequired,
+   handleGradientHueChange: PropTypes.func.isRequired,
+ }
 
 export default ColorGradient;
