@@ -220,7 +220,6 @@ class SketcherCntr extends Component {
   }
 
   setGradientColor = (canvas, hexColor) => {
-    // A reference to the context of the canvas
     const context = canvas.getContext('2d');
 
     // Base color
