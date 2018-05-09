@@ -17,7 +17,7 @@ class ColorGradient extends Component {
                className="color-gradient-canvas" 
                ref="canvas" 
                onMouseDown={(e) => getColor(e, this.refs.canvas)}/>
-            <input type="range" min="0" max={255 * 2} onChange={(e) => handleGradientHueChange(e)}/>
+            <input type="range" min="0" max={255 * 6} onChange={(e) => handleGradientHueChange(e, this.refs.canvas)}/>
          </div>
       );
    }

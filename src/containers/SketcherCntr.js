@@ -55,8 +55,6 @@ class SketcherCntr extends Component {
   }
 
   initGradientCanvas = (canvas) => {
-    const { colorGradientHue } = this.state;
-    
     // The context of the canvas
     const context = canvas.getContext('2d');
 
@@ -64,23 +62,7 @@ class SketcherCntr extends Component {
     canvas.width = 200;
     canvas.height = 200;
 
-    // Base color
-    context.fillStyle = colorGradientHue.hex;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Linear Gradient color
-    const whiteGrd = context.createLinearGradient(0, 0, canvas.width, 0);
-    whiteGrd.addColorStop(0, "white");
-    whiteGrd.addColorStop(1, "transparent");
-    context.fillStyle = whiteGrd;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Linear Gradient color
-    const blackGrd = context.createLinearGradient(0, canvas.height, 0, 0);
-    blackGrd.addColorStop(0, "black");
-    blackGrd.addColorStop(1, "transparent");
-    context.fillStyle = blackGrd;
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    this.setGradientColor(canvas, this.state.colorGradientHue.hex);
   }
 
   handleChange = (property, value) => {
@@ -196,18 +178,68 @@ class SketcherCntr extends Component {
     this.handleBrushSettings('brush', 'color', hex);
   }
 
-  handleGradientHueChange = (e) => {
+  handleGradientHueChange = (e, canvas) => {
     const value = e.target.value;
-    const r = value < 256 ? 255 - value : 0;
-    const g = (value > 0 && value < 256) ? +value : (value > 255 && value < (255 * 2 + 1)) ? (255 - (value - 255)) : 0;
-    const b = value > 255 ? value - 255 : 0;
+    const range = new Array(6);
+    for (let i = 0; i < range.length; i++) {
+      range[i] = i * 255 + 255;
+    }
+
+    const r = (value >= range[3] && value < range[4]+1) 
+              ? (value - range[3]) 
+              : ((value >= 0 && value < range[0]+1) || value >= range[4]) 
+              ? 255
+              : (value >= range[0] && value < range[1]+1) 
+              ? (range[1] - value) 
+              : 0;
+    const g = (value >= 0 && value < range[0]+1) 
+              ? (+value) 
+              : (value >= range[0] && value < range[2]+1) 
+              ? 255 
+              : (value >= range[2] && value < range[3]+1) 
+              ? (range[3] - value) 
+              : 0;
+    const b = (value >= range[1] && value < range[2]+1) 
+              ? (value - range[1]) 
+              : (value >= range[2] && value < range[4]+1) 
+              ? 255 
+              : (value >= range[4] && value < range[5]+1) 
+              ? (range[5] - value) 
+              : 0;
     const hex = this.rgbToHex(r, g, b);
+
+    console.log( range );
     console.log( r, g, b, hex );
     console.log( value );
 
     this.setState({ 
       colorGradientHue: { r, g, b, hex } 
     });
+
+    this.setGradientColor(canvas, hex);
+  }
+
+  setGradientColor = (canvas, hexColor) => {
+    // A reference to the context of the canvas
+    const context = canvas.getContext('2d');
+
+    // Base color
+    context.fillStyle = hexColor;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Linear Gradient color
+    const whiteGrd = context.createLinearGradient(0, 0, canvas.width, 0);
+    whiteGrd.addColorStop(0, "white");
+    whiteGrd.addColorStop(1, "transparent");
+    context.fillStyle = whiteGrd;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Linear Gradient color
+    const blackGrd = context.createLinearGradient(0, canvas.height, 0, 0);
+    blackGrd.addColorStop(0, "black");
+    blackGrd.addColorStop(1, "transparent");
+    context.fillStyle = blackGrd;
+    context.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   colorToHex = (c) => {
