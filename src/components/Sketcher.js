@@ -10,7 +10,8 @@ const Sketcher = (props) => {
     colorPicker,
     handleChange, 
     handleToolChange,
-    handleBrushSettings
+    handleBrushSettings,
+    children
   } = props;
 
   return (
@@ -39,7 +40,11 @@ const Sketcher = (props) => {
           <div style={{width:'50px', height:'50px', background: colorPicker.color}}></div>
         </ul>
 
-        { props.children /* The canvas */  }
+        { children[0] /*  Canvas */  }
+
+        <div className="color-gradient">
+          { children[1] /*  Color Gradient  */}
+        </div>
       </div>
     </div>
   );
@@ -53,6 +58,7 @@ Sketcher.propTypes = {
   handleChange: PropTypes.func.isRequired, 
   handleToolChange: PropTypes.func.isRequired,
   handleBrushSettings: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired
 }
 
 export default Sketcher;

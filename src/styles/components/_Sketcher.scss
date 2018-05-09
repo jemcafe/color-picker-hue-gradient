@@ -7,7 +7,7 @@ $white: #fff;
   background: #e4e4e4;
 
   .tool-customize-menu {
-    background: rgb(255, 215, 192);
+    background: #ffd7c0;
   }
 
   .tools-canvas {
@@ -25,18 +25,13 @@ $white: #fff;
         border: 2px solid transparent;
         border-radius: 3px;
         color: #f0f0f0;
-        background: rgb(182, 137, 144);
+        background: #b68990;
         cursor: pointer;
   
         &:hover {
           border-color: $white;
         }
       }
-    }
-
-    canvas {
-      border: 2px solid gray;
-      border-radius: 5px;
     }
   }
 }

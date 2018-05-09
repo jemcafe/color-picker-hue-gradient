@@ -8,9 +8,14 @@ body {
 ul {
   margin: 0;
   padding: 0;
-  list-style-type: none; }
+  list-style-type: none;
+  background: #ff0000; }
 
 /*  Components  */
+.main-canvas {
+  border: 2px solid gray;
+  border-radius: 5px; }
+
 .sketcher {
   background: #e4e4e4; }
   .sketcher .tool-customize-menu {
@@ -32,6 +37,3 @@ ul {
         cursor: pointer; }
         .sketcher .tools-canvas .tool-menu > li:hover {
           border-color: #fff; }
-    .sketcher .tools-canvas canvas {
-      border: 2px solid gray;
-      border-radius: 5px; }

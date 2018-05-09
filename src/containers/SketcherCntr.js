@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Sketcher from '../components/Sketcher';
+import MainCanvas from '../components/MainCanvas';
+import ColorGradient from '../components/ColorGradient';
 
 class SketcherCntr extends Component {
   constructor () {
@@ -21,31 +23,15 @@ class SketcherCntr extends Component {
       colorPicker: {
         color: '#000'
       },
-      dragging: false
+      dragging: false,
+      colorGradientHue: {
+        r: 255,
+        g: 0,
+        b: 0,
+        hex: '#ff0000'
+      }
     }
   }
-
-  componentDidMount () {
-    // A reference to the canvas and the its context
-    const canvas = this.refs.canvas;
-    const context = canvas.getContext('2d');
-
-    // The size of the canvas
-    canvas.width = 400;
-    canvas.height = 400;
-
-    // The initial background color of the canvas. Without this there would be no pixel data at the start.
-    context.fillStyle = '#fff';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    // const context = canvas.getContext('2d');
-    // const imgObj = new Image();
-
-    // imgObj.onload = () => {
-    //   context.drawImage(imgObj, 0, 0);
-    // };
-    // imgObj.src = 'http://www.bulgariasega.com/files/zdrave/glavobolie1.jpg';
-}
 
   handleChange = (property, value) => {
     this.setState({ [property]: value });
@@ -70,29 +56,29 @@ class SketcherCntr extends Component {
     }));
   }
 
-  engage = (e) => {
+  engage = (e, canvas) => {
     const { brush, eraser, colorPicker } = this.state.toolSelected;
 
     if ( brush || eraser ) {
       this.setState({ dragging: true });
 
       // An initial point is drawn without dragging the mouse
-      this.putPoint(e, false);
+      this.putPoint(e, canvas, false);
 
     } else if ( colorPicker ) {
       // Gets the pixel color
-      this.getColor(e);
+      this.getColor(e, canvas);
     }
   }
 
-  putPoint = (e, click) => {  // The click parameter is needed so a point is drawn without dragging the mouse
+  putPoint = (e, canvas, click) => {  // The click parameter is needed so a point is drawn without dragging the mouse
     const { toolSelected, brush, eraser, dragging } = this.state;
 
     // A conditional for whether the brush or eraser is selected
     const tool = toolSelected.brush ? brush : eraser;
 
     // The context of the canvas
-    const context = this.refs.canvas.getContext('2d');
+    const context = canvas.getContext('2d');
     
     // Mouse position
     const x = e.nativeEvent.offsetX,
@@ -124,41 +110,52 @@ class SketcherCntr extends Component {
     }
   }
 
-  resetPath = () => {
+  resetPath = (canvas) => {
     // The path is reset
-    this.refs.canvas.getContext('2d').beginPath();
+    canvas.getContext('2d').beginPath();
   }
 
-  disengage = () => {
+  disengage = (canvas) => {
     this.setState({ dragging: false });
 
     // The path is reset. All the paths would be connected without a reseting when the mouse is up.
-    const context = this.refs.canvas.getContext('2d');
+    const context = canvas.getContext('2d');
     context.beginPath();
   }
 
-  getColor = (e) => {
+  getColor = (e, canvas) => {
     // Mouse position
     const x = e.nativeEvent.offsetX,
           y = e.nativeEvent.offsetY;
     
     // A reference to the context of the canvas
-    const context = this.refs.canvas.getContext('2d');
+    const context = canvas.getContext('2d');
 
     // .getImageData gets an array of the pixels rgb colors [r,g,b,a,r,g,b,a,r...]
     const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData( x, y, width, height)
     
     // The hexadecimal color of the canvas pixel
-    const hexColor = this.rgbToHex(imgData[0], imgData[1], imgData[2])
-
-    console.log('Image Data', imgData);
-    console.log('Hex color', hexColor);
+    const hex = this.rgbToHex(imgData[0], imgData[1], imgData[2])
 
     // The colorPicker's color is changed
-    this.setState({ colorPicker: { color: hexColor } });
+    this.setState({ colorPicker: { color: hex } });
     
     // The brush's color is changed
-    this.handleBrushSettings('brush', 'color', hexColor);
+    this.handleBrushSettings('brush', 'color', hex);
+  }
+
+  handleGradientHueChange = (e) => {
+    const value = e.target.value;
+    const r = value < 256 ? 255 - value : 0;
+    const g = (value > 0 && value < 256) ? +value : (value > 255 && value < (255 * 2 + 1)) ? (255 - (value - 255)) : 0;
+    const b = value > 255 ? value - 255 : 0;
+    const hex = this.rgbToHex(r, g, b);
+    console.log( r, g, b, hex );
+    console.log( value );
+
+    this.setState({ 
+      colorGradientHue: { r, g, b, hex } 
+    });
   }
 
   colorToHex = (c) => {
@@ -172,22 +169,28 @@ class SketcherCntr extends Component {
   }
 
   render() {
-    const { toolSelected, brush, eraser, colorPicker } = this.state;
+    const { toolSelected, brush, eraser, colorPicker, colorGradientHue } = this.state;
 
     return (
-      <Sketcher toolSelected={ toolSelected }
-                brush={ brush }
-                eraser={ eraser }
-                colorPicker={ colorPicker }
-                handleChange={ this.handleChange }
-                handleToolChange={ this.handleToolChange }
-                handleBrushSettings={ this.handleBrushSettings}>
+      <Sketcher 
+        toolSelected={ toolSelected }
+        brush={ brush }
+        eraser={ eraser }
+        colorPicker={ colorPicker }
+        handleChange={ this.handleChange }
+        handleToolChange={ this.handleToolChange }
+        handleBrushSettings={ this.handleBrushSettings }>
 
-        <canvas ref="canvas" 
-                onMouseDown={ this.engage } 
-                onMouseMove={ (e) => this.putPoint(e, false) }
-                onMouseOut={ this.resetPath }
-                onMouseUp={ this.disengage }/>
+        <MainCanvas 
+          engage={ this.engage }
+          putPoint={ this.putPoint }
+          resetPath={ this.resetPath }
+          disengage={ this.disengage } />
+        <ColorGradient 
+          colorGradientHue={ colorGradientHue }
+          getColor={ this.getColor }
+          handleGradientHueChange={ this.handleGradientHueChange } />
+
       </Sketcher>
     );
   }
