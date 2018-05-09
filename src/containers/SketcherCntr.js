@@ -33,6 +33,56 @@ class SketcherCntr extends Component {
     }
   }
 
+  initCanvas = (canvas) => {
+    // The context of the canvas
+    const context = canvas.getContext('2d');
+
+    // The size of the canvas
+    canvas.width = 400;
+    canvas.height = 400;
+
+    // The initial background color of the canvas. Without this there would be no pixel data at the start.
+    context.fillStyle = '#fff';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // const context = canvas.getContext('2d');
+    // const imgObj = new Image();
+
+    // imgObj.onload = () => {
+    //   context.drawImage(imgObj, 0, 0);
+    // };
+    // imgObj.src = 'http://www.bulgariasega.com/files/zdrave/glavobolie1.jpg';
+  }
+
+  initGradientCanvas = (canvas) => {
+    const { colorGradientHue } = this.state;
+    
+    // The context of the canvas
+    const context = canvas.getContext('2d');
+
+    // The size of the canvas
+    canvas.width = 200;
+    canvas.height = 200;
+
+    // Base color
+    context.fillStyle = colorGradientHue.hex;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Linear Gradient color
+    const whiteGrd = context.createLinearGradient(0, 0, canvas.width, 0);
+    whiteGrd.addColorStop(0, "white");
+    whiteGrd.addColorStop(1, "transparent");
+    context.fillStyle = whiteGrd;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Linear Gradient color
+    const blackGrd = context.createLinearGradient(0, canvas.height, 0, 0);
+    blackGrd.addColorStop(0, "black");
+    blackGrd.addColorStop(1, "transparent");
+    context.fillStyle = blackGrd;
+    context.fillRect(0, 0, canvas.width, canvas.height);
+  }
+
   handleChange = (property, value) => {
     this.setState({ [property]: value });
   }
@@ -135,7 +185,9 @@ class SketcherCntr extends Component {
     const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData( x, y, width, height)
     
     // The hexadecimal color of the canvas pixel
-    const hex = this.rgbToHex(imgData[0], imgData[1], imgData[2])
+    const hex = this.rgbToHex(imgData[0], imgData[1], imgData[2]);
+
+    console.log('hex', hex);
 
     // The colorPicker's color is changed
     this.setState({ colorPicker: { color: hex } });
@@ -182,12 +234,14 @@ class SketcherCntr extends Component {
         handleBrushSettings={ this.handleBrushSettings }>
 
         <MainCanvas 
+          initCanvas={ this.initCanvas }
           engage={ this.engage }
           putPoint={ this.putPoint }
           resetPath={ this.resetPath }
           disengage={ this.disengage } />
-        <ColorGradient 
+        <ColorGradient
           colorGradientHue={ colorGradientHue }
+          initGradientCanvas={ this.initGradientCanvas }
           getColor={ this.getColor }
           handleGradientHueChange={ this.handleGradientHueChange } />
 

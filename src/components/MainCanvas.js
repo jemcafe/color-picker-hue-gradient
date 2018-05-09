@@ -4,25 +4,7 @@ import PropTypes from 'prop-types';
 class MainCanvas extends Component {
 
    componentDidMount () {
-      // A reference to the canvas and the its context
-      const canvas = this.refs.canvas;
-      const context = canvas.getContext('2d');
-  
-      // The size of the canvas
-      canvas.width = 400;
-      canvas.height = 400;
-  
-      // The initial background color of the canvas. Without this there would be no pixel data at the start.
-      context.fillStyle = '#fff';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-  
-      // const context = canvas.getContext('2d');
-      // const imgObj = new Image();
-  
-      // imgObj.onload = () => {
-      //   context.drawImage(imgObj, 0, 0);
-      // };
-      // imgObj.src = 'http://www.bulgariasega.com/files/zdrave/glavobolie1.jpg';
+      this.props.initCanvas(this.refs.canvas);
    }
 
    render () {
@@ -41,6 +23,7 @@ class MainCanvas extends Component {
 }
 
 MainCanvas.propTypes = {
+   initCanvas: PropTypes.func.isRequired,
    engage: PropTypes.func.isRequired,
    putPoint: PropTypes.func.isRequired,
    resetPath: PropTypes.func.isRequired,
