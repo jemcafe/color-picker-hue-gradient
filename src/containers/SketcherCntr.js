@@ -55,9 +55,6 @@ class SketcherCntr extends Component {
   }
 
   initGradientCanvas = (canvas) => {
-    // The context of the canvas
-    const context = canvas.getContext('2d');
-
     // The size of the canvas
     canvas.width = 200;
     canvas.height = 200;
@@ -176,41 +173,41 @@ class SketcherCntr extends Component {
     
     // The brush's color is changed
     this.handleBrushSettings('brush', 'color', hex);
+
+    //
   }
 
   handleGradientHueChange = (e, canvas) => {
     const value = e.target.value;
-    const range = new Array(6);
+    const range = new Array(7);
     for (let i = 0; i < range.length; i++) {
-      range[i] = i * 255 + 255;
+      range[i] = i * 255;
     }
 
-    const r = (value >= range[3] && value < range[4]+1) 
-              ? (value - range[3]) 
-              : ((value >= 0 && value < range[0]+1) || value >= range[4]) 
-              ? 255
-              : (value >= range[0] && value < range[1]+1) 
-              ? (range[1] - value) 
-              : 0;
-    const g = (value >= 0 && value < range[0]+1) 
-              ? (+value) 
-              : (value >= range[0] && value < range[2]+1) 
-              ? 255 
-              : (value >= range[2] && value < range[3]+1) 
-              ? (range[3] - value) 
-              : 0;
-    const b = (value >= range[1] && value < range[2]+1) 
-              ? (value - range[1]) 
-              : (value >= range[2] && value < range[4]+1) 
-              ? 255 
-              : (value >= range[4] && value < range[5]+1) 
-              ? (range[5] - value) 
-              : 0;
+    const r = (value >= range[4]  && value < range[5]+1) 
+            ? (value - range[4]) 
+            : ((value >= range[0] && value < range[1]+1) || value >= range[5]) 
+            ? range[1] 
+            : (value >= range[1]  && value < range[2]+1) 
+            ? (range[2] - value) 
+            : range[0];
+    const g = (value >= range[0]  && value < range[1]+1) 
+            ? (+value) 
+            : (value >= range[1]  && value < range[3]+1) 
+            ? range[1] 
+            : (value >= range[3]  && value < range[4]+1) 
+            ? (range[4] - value) 
+            : range[0];
+    const b = (value >= range[2]  && value < range[3]+1) 
+            ? (value - range[2]) 
+            : (value >= range[3]  && value < range[5]+1) 
+            ? range[1] 
+            : (value >= range[5]  && value < range[6]+1) 
+            ? (range[6] - value) 
+            : range[0];
     const hex = this.rgbToHex(r, g, b);
 
-    console.log( range );
     console.log( r, g, b, hex );
-    console.log( value );
 
     this.setState({ 
       colorGradientHue: { r, g, b, hex } 
@@ -222,23 +219,42 @@ class SketcherCntr extends Component {
   setGradientColor = (canvas, hexColor) => {
     const context = canvas.getContext('2d');
 
-    // Base color
+    // Hue color
     context.fillStyle = hexColor;
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Linear Gradient color
+    // White linear gradient color
     const whiteGrd = context.createLinearGradient(0, 0, canvas.width, 0);
-    whiteGrd.addColorStop(0, "white");
+    whiteGrd.addColorStop(0, "#fff");
     whiteGrd.addColorStop(1, "transparent");
     context.fillStyle = whiteGrd;
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Linear Gradient color
+    // Black linear gradient color
     const blackGrd = context.createLinearGradient(0, canvas.height, 0, 0);
-    blackGrd.addColorStop(0, "black");
+    blackGrd.addColorStop(0, "#000");
     blackGrd.addColorStop(1, "transparent");
     context.fillStyle = blackGrd;
     context.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Picker circle
+    // context.strokeStyle = '#fff';
+    // context.stroke();
+    // context.arc(50, 50, 5, 0, 2 * Math.PI);
+    // context.beginPath();
+  }
+
+  drawGradientPickerCircle = (e, canvas) => {
+    const context = canvas.getContext('2d');
+
+    // Mouse position
+    const x = e.nativeEvent.offsetX,
+          y = e.nativeEvent.offsetY;
+
+    // Picker circle
+    context.strokeStyle = '#fff';
+    context.stroke();
+    context.arc(50, 50, 5, 0, 2 * Math.PI);
   }
 
   colorToHex = (c) => {
