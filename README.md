@@ -1,8 +1,8 @@
 ## Sketcher
 
-This is an app for drawing images.
+An app for drawing images.
 
 ### Built with
 
-React
-Sass
+* React
+* Sass
