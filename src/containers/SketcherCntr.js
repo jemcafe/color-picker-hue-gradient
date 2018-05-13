@@ -44,14 +44,6 @@ class SketcherCntr extends Component {
     // The initial background color of the canvas. Without this there would be no pixel data at the start.
     context.fillStyle = '#fff';
     context.fillRect(0, 0, canvas.width, canvas.height);
-
-    // const context = canvas.getContext('2d');
-    // const imgObj = new Image();
-
-    // imgObj.onload = () => {
-    //   context.drawImage(imgObj, 0, 0);
-    // };
-    // imgObj.src = 'http://www.bulgariasega.com/files/zdrave/glavobolie1.jpg';
   }
 
   initGradientCanvas = (canvas) => {
@@ -59,7 +51,9 @@ class SketcherCntr extends Component {
     canvas.width = 200;
     canvas.height = 200;
 
-    this.setGradientColor(canvas, this.state.colorGradientHue.hex);
+    const { colorGradientHue: { hex: hexColor } } = this.state; // Nested destructuring. The name of the property can be changed
+
+    this.setGradientColor(canvas, hexColor);
   }
 
   handleChange = (property, value) => {
@@ -92,7 +86,7 @@ class SketcherCntr extends Component {
       this.setState({ dragging: true });
 
       // An initial point is drawn without dragging the mouse
-      this.putPoint(e, canvas, false);
+      this.putPoint(e, canvas, true);
 
     } else if ( colorPicker ) {
       // Gets the pixel color
@@ -135,7 +129,7 @@ class SketcherCntr extends Component {
       context.beginPath();
 
       // Beginning of the line path
-      context.moveTo(x, y)
+      context.moveTo(x, y);
     }
   }
 
@@ -173,8 +167,6 @@ class SketcherCntr extends Component {
     
     // The brush's color is changed
     this.handleBrushSettings('brush', 'color', hex);
-
-    //
   }
 
   handleGradientHueChange = (e, canvas) => {
@@ -223,14 +215,14 @@ class SketcherCntr extends Component {
     context.fillStyle = hexColor;
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    // White linear gradient color
+    // White linear gradient
     const whiteGrd = context.createLinearGradient(0, 0, canvas.width, 0);
     whiteGrd.addColorStop(0, "#fff");
     whiteGrd.addColorStop(1, "transparent");
     context.fillStyle = whiteGrd;
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Black linear gradient color
+    // Black linear gradient
     const blackGrd = context.createLinearGradient(0, canvas.height, 0, 0);
     blackGrd.addColorStop(0, "#000");
     blackGrd.addColorStop(1, "transparent");
@@ -238,10 +230,9 @@ class SketcherCntr extends Component {
     context.fillRect(0, 0, canvas.width, canvas.height);
 
     // Picker circle
-    // context.strokeStyle = '#fff';
-    // context.stroke();
-    // context.arc(50, 50, 5, 0, 2 * Math.PI);
-    // context.beginPath();
+    context.strokeStyle = '#fff';
+    context.stroke();
+    context.arc(100, 100, 5, 0, 2 * Math.PI);
   }
 
   drawGradientPickerCircle = (e, canvas) => {
@@ -254,11 +245,11 @@ class SketcherCntr extends Component {
     // Picker circle
     context.strokeStyle = '#fff';
     context.stroke();
-    context.arc(50, 50, 5, 0, 2 * Math.PI);
+    context.arc(x, y, 5, 0, 2 * Math.PI);
   }
 
   colorToHex = (c) => {
-    var hex = c.toString(16);
+    const hex = c.toString(16);
     return hex.length === 1 ? "0" + hex : hex;
   }
 

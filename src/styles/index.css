@@ -17,14 +17,27 @@ input {
 /*  Components  */
 .color-gradient {
   display: flex;
-  flex-direction: column; }
-
-.main-canvas {
-  border: 2px solid gray;
-  border-radius: 5px; }
+  align-items: flex-start; }
+  .color-gradient canvas:hover {
+    cursor: url("../assets/colorGradientCursor.png") 10 10, auto; }
+  .color-gradient .slider-wrapper {
+    display: inline-block;
+    width: 20px;
+    height: 200px;
+    padding: 0; }
+    .color-gradient .slider-wrapper input {
+      width: 200px;
+      height: 20px;
+      margin: 0;
+      transform-origin: 100px 100px;
+      transform: rotate(-90deg); }
 
 .sketcher {
-  background: #e4e4e4; }
+  display: flex;
+  background: #f3f3f3; }
+  .sketcher .container {
+    border: 2px solid gray;
+    background: #e4e4e4; }
   .sketcher .tool-customize-menu {
     background: #ffd7c0; }
   .sketcher .tools-canvas {
@@ -32,10 +45,12 @@ input {
     .sketcher .tools-canvas .tool-menu {
       display: flex;
       flex-direction: column;
+      padding: 4px;
+      box-sizing: border-box;
       background: #c0d6ff; }
       .sketcher .tools-canvas .tool-menu > li {
-        margin: 4px 4px 0 4px;
-        padding: 10px;
+        margin: 0 0 4px 0;
+        padding: 15px;
         box-sizing: border-box;
         border: 2px solid transparent;
         border-radius: 3px;

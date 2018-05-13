@@ -1,3 +1,8 @@
 ## Sketcher
 
-In progress
+This is an app for drawing images.
+
+### Built with
+
+React
+Sass

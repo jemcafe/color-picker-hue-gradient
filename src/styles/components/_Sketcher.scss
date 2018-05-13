@@ -1,10 +1,15 @@
 // Variables
 $white: #fff;
 
-// Sketcher Component
+
 .sketcher {
-  // display: flex;
-  background: #e4e4e4;
+  display: flex;
+  background: #f3f3f3;
+
+  .container {
+    border: 2px solid gray;
+    background: #e4e4e4;
+  }
 
   .tool-customize-menu {
     background: #ffd7c0;
@@ -16,11 +21,13 @@ $white: #fff;
     .tool-menu {
       display: flex;
       flex-direction: column;
+      padding: 4px;
+      box-sizing: border-box;
       background: #c0d6ff;
       
       > li {  // Icons
-        margin: 4px 4px 0 4px;
-        padding: 10px;
+        margin: 0 0 4px 0;
+        padding: 15px;
         box-sizing: border-box;
         border: 2px solid transparent;
         border-radius: 3px;

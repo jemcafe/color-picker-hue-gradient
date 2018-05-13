@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Aux from '../hoc/Aux';
+// import Aux from '../hoc/Aux';
 
 class ColorGradient extends Component {
 
@@ -14,10 +14,12 @@ class ColorGradient extends Component {
       return (
          <div className="color-gradient">
             <canvas 
-               className="color-gradient-canvas" 
-               ref="canvas" 
-               onMouseDown={(e) => getColor(e, this.refs.canvas)}/>
-            <input type="range" min="0" max={255 * 6} onChange={(e) => handleGradientHueChange(e, this.refs.canvas)}/>
+              className="color-gradient-canvas" 
+              ref="canvas" 
+              onMouseDown={(e) => getColor(e, this.refs.canvas)}/>
+            <div className="slider-wrapper">
+              <input type="range" min="0" max={255 * 6} onChange={(e) => handleGradientHueChange(e, this.refs.canvas)}/>
+            </div>
          </div>
       );
    }
