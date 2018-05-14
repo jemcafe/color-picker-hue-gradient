@@ -1,6 +1,6 @@
 ## Sketcher
 
-An app for drawing images.
+An app for sketching images.
 
 ### Built with
 
