@@ -5,20 +5,25 @@ import PropTypes from 'prop-types';
 class ColorGradient extends Component {
 
    componentDidMount () {
-      this.props.initGradientCanvas(this.refs.canvas);
+      this.props.initCanvas(this.refs.canvas);
    }
 
    render () {
-      const { colorGradientHue, getColor, handleGradientHueChange } = this.props;
-
+      const { color, gradientHue, engage, getColor, disengage, handleHueChange } = this.props;
+      
       return (
          <div className="color-gradient">
+            <div style={{width:'25px',height:'25px',background: color.hex}}></div>
             <canvas 
               className="color-gradient-canvas" 
               ref="canvas" 
-              onMouseDown={(e) => getColor(e, this.refs.canvas)}/>
+              onMouseDown={(e) => engage(e, this.refs.canvas)}
+              onMouseMove={(e) => getColor(e, this.refs.canvas)}
+              // onMouseOut={(e) => getColor(e), this.refs.canvas}
+              onMouseUp={(e) => disengage(e, this.refs.canvas)}
+            />
             <div className="slider-wrapper">
-              <input type="range" min="0" max={255 * 6} onChange={(e) => handleGradientHueChange(e, this.refs.canvas)}/>
+              <input type="range" min="0" max={255 * 6} onChange={(e) => handleHueChange(e, this.refs.canvas)}/>
             </div>
          </div>
       );
@@ -26,10 +31,12 @@ class ColorGradient extends Component {
 }
 
 ColorGradient.propTypes = {
-   colorGradientHue: PropTypes.object.isRequired,
-   initGradientCanvas: PropTypes.func.isRequired,
+   gradientHue: PropTypes.object.isRequired,
+   initCanvas: PropTypes.func.isRequired,
+   engage: PropTypes.func.isRequired,
    getColor: PropTypes.func.isRequired,
-   handleGradientHueChange: PropTypes.func.isRequired,
+   disengage: PropTypes.func.isRequired,
+   handleHueChange: PropTypes.func.isRequired,
  }
 
 export default ColorGradient;
