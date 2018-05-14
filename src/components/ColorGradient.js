@@ -17,13 +17,13 @@ class ColorGradient extends Component {
             <canvas 
               className="color-gradient-canvas" 
               ref="canvas" 
-              onMouseDown={(e) => engage(e, this.refs.canvas)}
-              onMouseMove={(e) => getColor(e, this.refs.canvas)}
+              onMouseDown={(e) => engage(this.refs.canvas, e)}
+              onMouseMove={(e) => getColor(this.refs.canvas, e)}
               // onMouseOut={(e) => getColor(e), this.refs.canvas}
-              onMouseUp={(e) => disengage(e, this.refs.canvas)}
+              onMouseUp={(e) => disengage(this.refs.canvas, e)}
             />
             <div className="slider-wrapper">
-              <input type="range" min="0" max={255 * 6} onChange={(e) => handleHueChange(e, this.refs.canvas)}/>
+              <input type="range" min="0" max={255 * 6} onChange={(e) => handleHueChange(this.refs.canvas, e)}/>
             </div>
          </div>
       );

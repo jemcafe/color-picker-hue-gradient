@@ -33,23 +33,23 @@ class ColorGradientCntr extends Component {
       }
     }));
 
-    this.setCanvas(null, canvas, this.state.gradientHue.hex);
+    this.setCanvas(canvas);
   }
 
   handleChange = (property, value) => {
     this.setState({ [property]: value });
   }
 
-  engage = (e, canvas) => {
+  engage = (canvas, e) => {
     this.setState({ dragging: true });
-    this.getColor(e, canvas, true);
+    this.getColor(canvas, e, true);
   }
 
   disengage = (canvas) => {
     this.setState({ dragging: false });
   }
 
-  getColor = (e, canvas, click) => {
+  getColor = (canvas, e, click) => {
     if ( this.state.dragging || click ) {
       // Mouse position
       const x = e.nativeEvent.offsetX,
@@ -71,11 +71,11 @@ class ColorGradientCntr extends Component {
         color: { hex, x, y }
       });
 
-      this.setCanvas(e, canvas, this.state.gradientHue.hex);
+      this.setCanvas(canvas, e);
     }
   }
 
-  handleHueChange = (e, canvas) => {
+  handleHueChange = (canvas, e) => {
     const value = e.target.value;
     const range = new Array(7);
 
@@ -112,17 +112,20 @@ class ColorGradientCntr extends Component {
       gradientHue: { r, g, b, hex } 
     });
 
-    this.setCanvas(e, canvas, hex);
+    this.setCanvas(canvas, e, hex);
   }
 
-  setCanvas = (e, canvas, hex) => {
+  setCanvas = (canvas, e, hex) => {
     this.setGradientColor(canvas, hex);
-    this.drawPickerCircle(e, canvas, hex);
+    this.drawCircle(canvas, e);
   }
 
-  setGradientColor = (canvas, hexColor) => {
+  setGradientColor = (canvas, hex) => {
     // Canvas context
     const context = canvas.getContext('2d');
+
+    // If there is no hex color, the color value from state is used
+    const hexColor = hex ? hex : this.state.gradientHue.hex;
     
     // White linear gradient
     const whiteGrd = context.createLinearGradient(0, 0, canvas.width, 0);
@@ -139,7 +142,7 @@ class ColorGradientCntr extends Component {
     context.fillRect(0, 0, canvas.width, canvas.height);
   }
 
-  drawPickerCircle = (e, canvas, hex) => {
+  drawCircle = (canvas, e) => {
     // Canvas context
     const context = canvas.getContext('2d');
 
@@ -157,7 +160,7 @@ class ColorGradientCntr extends Component {
     context.strokeStyle = (x < 50 && y < 50) ? '#000' : '#fff';
     context.stroke();
 
-    // The path is reset so the point don't connect 
+    // The path is reset so it's not one long path
     context.beginPath();
   }
 
