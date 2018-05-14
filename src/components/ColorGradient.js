@@ -9,11 +9,11 @@ class ColorGradient extends Component {
    }
 
    render () {
-      const { color, gradientHue, engage, getColor, disengage, handleHueChange } = this.props;
+      const { color, engage, getColor, disengage, handleHueChange } = this.props;
       
       return (
          <div className="color-gradient">
-            <div style={{width:'25px',height:'25px',background: color.hex}}></div>
+            <div className="color" style={{background: color.hex}}><div></div></div>
             <canvas 
               className="color-gradient-canvas" 
               ref="canvas" 
@@ -31,7 +31,7 @@ class ColorGradient extends Component {
 }
 
 ColorGradient.propTypes = {
-   gradientHue: PropTypes.object.isRequired,
+   color: PropTypes.object.isRequired,
    initCanvas: PropTypes.func.isRequired,
    engage: PropTypes.func.isRequired,
    getColor: PropTypes.func.isRequired,

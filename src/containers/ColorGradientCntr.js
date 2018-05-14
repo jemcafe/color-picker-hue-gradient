@@ -8,7 +8,7 @@ class ColorGradientCntr extends Component {
       color: {
         hex: '#000',
         x: 0,
-        y: 0
+        y: 200
       },
       gradientHue: {
         r: 255,
@@ -21,17 +21,12 @@ class ColorGradientCntr extends Component {
   }
 
   initCanvas = (canvas) => {
-    // The size of the canvas
-    canvas.width = 200;
-    canvas.height = 200;
+    const { color: { y } } = this.state;
 
-    this.setState(prev => ({
-      color: {
-        hex: prev.color.hex,
-        x: prev.color.x,
-        y: canvas.height
-      }
-    }));
+    // The size of the canvas. 
+    // The y coordinate value of color is used for the initial canvas size because the default color is black which always located at the height value of the canvas.
+    canvas.width = y;
+    canvas.height = y;
 
     this.setCanvas(canvas);
   }
@@ -58,8 +53,8 @@ class ColorGradientCntr extends Component {
       // A reference to the context of the canvas
       const context = canvas.getContext('2d');
 
-      // .getImageData gets an array of the pixels rgb colors [r,g,b,a,r,g,b,a,r...]
-      const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData( x, y, width, height)
+      // The .getImageData() method returns an array of the pixel rgb colors [r,g,b,a,r,g,b,a,r...]
+      const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData(x, y, width, height)
       
       // The hexadecimal color of the canvas pixel
       const hex = this.rgbToHex(imgData[0], imgData[1], imgData[2]);
@@ -71,6 +66,7 @@ class ColorGradientCntr extends Component {
         color: { hex, x, y }
       });
 
+      // The canvas is set so the circle changes position.
       this.setCanvas(canvas, e);
     }
   }
@@ -120,17 +116,14 @@ class ColorGradientCntr extends Component {
     this.drawCircle(canvas, e);
   }
 
-  setGradientColor = (canvas, hex) => {
+  setGradientColor = (canvas, hex = this.state.gradientHue.hex ) => {
     // Canvas context
     const context = canvas.getContext('2d');
-
-    // If there is no hex color, the color value from state is used
-    const hexColor = hex ? hex : this.state.gradientHue.hex;
     
     // White linear gradient
     const whiteGrd = context.createLinearGradient(0, 0, canvas.width, 0);
     whiteGrd.addColorStop(0.01, "#fff");
-    whiteGrd.addColorStop(1, hexColor);
+    whiteGrd.addColorStop(1, hex);
     context.fillStyle = whiteGrd;
     context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -148,9 +141,9 @@ class ColorGradientCntr extends Component {
 
     // Mouse position and radius
     // If there is no mouse event or the mouse coordinates are undefined, the coordinates from state are used.
-    const { color } = this.state;
-    const x = e ? e.nativeEvent.offsetX || color.x : color.x,
-          y = e ? e.nativeEvent.offsetY || color.y : color.y,
+    const { color: c } = this.state;
+    const x = e ? e.nativeEvent.offsetX || c.x : c.x,
+          y = e ? e.nativeEvent.offsetY || c.y : c.y,
           radius = 5;
 
     // Circle
@@ -175,12 +168,11 @@ class ColorGradientCntr extends Component {
   }
 
   render() {
-    const { color, gradientHue } = this.state;
+    const { color } = this.state;
 
     return (
       <ColorGradient
          color={ color }
-         gradientHue={ gradientHue }
          initCanvas={ this.initCanvas }
          engage={ this.engage }
          getColor={ this.getColor }

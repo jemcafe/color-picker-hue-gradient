@@ -18,6 +18,12 @@ input {
 .color-gradient {
   display: flex;
   align-items: flex-start; }
+  .color-gradient .color {
+    border: 1px solid #000; }
+    .color-gradient .color div {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #fff; }
   .color-gradient canvas:hover {
     cursor: url("../assets/colorGradientCursor.png") 10 10, auto; }
   .color-gradient .slider-wrapper {
