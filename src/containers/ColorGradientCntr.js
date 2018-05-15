@@ -72,35 +72,43 @@ class ColorGradientCntr extends Component {
   }
 
   handleHueChange = (canvas, e) => {
-    const value = e.target.value;
+    const value = +e.target.value; // The value is converted to an integer
     const range = new Array(7);
+    const rgb = new Array(3);
+    const index = new Array(rgb.length);
+    const indexStart = [4, 5, 1, 2];
 
+    // Range values 
     for (let i = 0; i < range.length; i++) {
       range[i] = i * 255;
     }
 
-    const r = (value >= range[4]  && value < range[5]+1) 
-            ? (value - range[4]) 
-            : ((value >= range[0] && value < range[1]+1) || value >= range[5]) 
-            ? range[1] 
-            : (value >= range[1]  && value < range[2]+1) 
-            ? (range[2] - value) 
-            : range[0];
-    const g = (value >= range[0]  && value < range[1]+1) 
-            ? (+value) 
-            : (value >= range[1]  && value < range[3]+1) 
-            ? range[1] 
-            : (value >= range[3]  && value < range[4]+1) 
-            ? (range[4] - value) 
-            : range[0];
-    const b = (value >= range[2]  && value < range[3]+1) 
-            ? (value - range[2]) 
-            : (value >= range[3]  && value < range[5]+1) 
-            ? range[1] 
-            : (value >= range[5]  && value < range[6]+1) 
-            ? (range[6] - value) 
-            : range[0];
-    const hex = this.rgbToHex(r, g, b);
+    const l = range.length-1;
+    for (let i = 0; i < index.length; i++) {
+      const j = i * 2;
+      index[i] = indexStart.map((e, k) => {
+        return ((k === 0 && j+indexStart[0] >= l) || j+indexStart[k] > l) ? j+indexStart[k] - l : j+indexStart[k];
+      });
+    }
+
+    console.log('indexStart', index);
+
+    // The rgb values change within specific ranges. The rgb values always range from 0 to 255.
+    for (let i = 0; i < rgb.length; i++) {
+      rgb[i] = (value >= range[index[i][0]] && value < range[index[i][1]]+1) 
+             ? (value - range[index[i][0]])
+             : (value >= range[index[i][1]] && value < range[index[i][2]]+1) 
+               || (i === 0 && (value >= range[5] || (value >= range[0] && value < range[1]+1))) // When the color goes back to red
+             ? range[1] 
+             : (value >= range[index[i][2]] && value < range[index[i][3]]+1) 
+             ? (range[index[i][3]] - value) 
+             : range[0];
+    }
+
+    const r = rgb[0], 
+          g = rgb[1], 
+          b = rgb[2], 
+          hex = this.rgbToHex(r, g, b);
 
     console.log( 'handleHueChange', { r, g, b, hex });
 
