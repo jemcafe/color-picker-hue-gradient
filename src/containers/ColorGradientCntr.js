@@ -76,18 +76,18 @@ class ColorGradientCntr extends Component {
   }
 
   handleHueChange = (canvas, e) => {
-    const value = +e.target.value; // The value is converted to an integer
-    const range = new Array(7);
+    const value = +e.target.value; // The target value is converted to an integer
     const rgb = new Array(3);
+    const range = new Array(rgb.length * 2 + 1);
     const index = new Array(rgb.length);
-    const indexStart = [4, 5, 1, 2];
+    const indexStart = [4, 5, 1, 2]; // Initial index values for the range
 
     // Range values. RGB values range from 0 to 255.
     for (let i = 0; i < range.length; i++) {
       range[i] = i * 255;
     }
 
-    // The index values for the rgb ranges.
+    // The index values for the rgb ranges. If an index are greater thaan the length of range, the value is 0.
     const l = range.length-1;
     for (let i = 0; i < index.length; i++) {
       const j = i * 2;
