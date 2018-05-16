@@ -14,11 +14,12 @@ class ColorGradient extends Component {
       return (
          <div className="color-gradient"
           onMouseMove={(e) => getColor(this.refs.canvas, e)}
-          onMouseUp={() => disengage(this.refs.canvas)}>
+          onMouseUp={() => disengage(this.refs.canvas)}
+          onMouseLeave={() => disengage(this.refs.canvas)}>
 
             <div className="color" style={{background: color.hex}}><div></div></div>
 
-            <canvas className="gradient-canvas" ref="canvas" 
+            <canvas ref="canvas" 
               onMouseDown={(e) => engage(this.refs.canvas, e)}/>
               
             <div className="slider-wrapper">
