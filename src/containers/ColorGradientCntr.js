@@ -19,7 +19,8 @@ class ColorGradientCntr extends Component {
         b: 0,
         hex: '#ff0000'
       },
-      dragging: false
+      dragging: false,
+      focus: false
     }
   }
 
@@ -41,12 +42,12 @@ class ColorGradientCntr extends Component {
   }
 
   engage = (canvas, e) => {
-    this.setState({ dragging: true });
+    this.setState({ dragging: true, focus: true });
     this.getColor(canvas, e, true);
   }
 
   disengage = (canvas) => {
-    this.setState({ dragging: false });
+    this.setState({ dragging: false, focus: false });
   }
 
   getColor = (canvas, e, fire) => {
@@ -71,7 +72,7 @@ class ColorGradientCntr extends Component {
       const b = imgData[2];
       const hex = this.rgbToHex(r, g, b);
 
-      console.log('getColor', { x, y, r, g, b, hex });
+      console.log('getColor', { r, g, b, hex, x, y });
 
       this.setState({ 
         color: { r, g, b, hex, x, y }
@@ -80,11 +81,11 @@ class ColorGradientCntr extends Component {
   }
 
   handleHueChange = (canvas, e) => {
-    const value = +e.target.value; // The target value is converted to an integer
-    const rgb = new Array(3);  // An array for the rgb values
-    const range = new Array(rgb.length * 2 + 1); // Each rgb item increases and decreases by 255  (3 * 2).  1 is added for when the color goes back to red.
-    const index = new Array(rgb.length); // rgb index values for the range array
-    const indexStart = [4, 5, 1, 2]; // Initial index values for the range array
+    const value = +e.target.value;               // The target value is converted to an integer
+    const rgb = new Array(3);                    // An array for the rgb values
+    const range = new Array(rgb.length * 2 + 1); // red, green, and blue increases to 255 and decreases to 0  (3 * 2).  1 is added for when the color goes back to red.
+    const index = new Array(rgb.length);         // rgb index values for the range array
+    const indexStart = [4, 5, 1, 2];             // Initial index values for the range array
 
     // Range values. RGB values range from 0 to 255.
     for (let i = 0; i < range.length; i++) {
@@ -100,17 +101,16 @@ class ColorGradientCntr extends Component {
       });
     }
 
-    console.log( 'indexes', index );
-
     // The rgb values change within specific ranges.
     for (let i = 0; i < rgb.length; i++) {
-      rgb[i] = (value >= range[index[i][0]] && value < range[index[i][1]]+1) 
-             ? (value - range[index[i][0]])
-             : (value >= range[index[i][1]] && value < range[index[i][2]]+1) 
+      const j = index[i];
+      rgb[i] = (value >= range[j[0]] && value < range[j[1]]+1) 
+             ? (value - range[j[0]])
+             : (value >= range[j[1]] && value < range[j[2]]+1) 
                || (i === 0 && (value >= range[5] || (value >= range[0] && value < range[1]+1))) // When the color goes back to red
              ? range[1] 
-             : (value >= range[index[i][2]] && value < range[index[i][3]]+1) 
-             ? (range[index[i][3]] - value) 
+             : (value >= range[j[2]] && value < range[j[3]]+1) 
+             ? (range[j[3]] - value) 
              : range[0];
     }
 
@@ -213,11 +213,12 @@ class ColorGradientCntr extends Component {
   }
 
   render() {
-    const { color } = this.state;
+    const { color, focus } = this.state;
 
     return (
       <ColorGradient
          color={ color }
+         focus={ focus }
          initCanvas={ this.initCanvas }
          engage={ this.engage }
          getColor={ this.getColor }

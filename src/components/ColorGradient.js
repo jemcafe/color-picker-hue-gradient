@@ -9,22 +9,28 @@ class ColorGradient extends Component {
    }
 
    render () {
-      const { color, engage, getColor, disengage, handleHueChange } = this.props;
+      const { color, focus, engage, getColor, disengage, handleHueChange } = this.props;
       
       return (
-         <div className="color-gradient"
-          onMouseMove={(e) => getColor(this.refs.canvas, e)}
-          onMouseUp={() => disengage(this.refs.canvas)}
-          onMouseLeave={() => disengage(this.refs.canvas)}>
+         <div className="color-gradient">
+
+            <div className="overlay" 
+              style={{ display: focus ? '' : 'none' }}
+              onMouseMove={(e) => getColor(this.refs.canvas, e)}
+              onMouseUp={() => disengage(this.refs.canvas)}
+              onMouseLeave={() => disengage(this.refs.canvas)}>
+            </div>
 
             <div className="color" style={{background: color.hex}}><div></div></div>
 
-            <canvas ref="canvas" 
-              onMouseDown={(e) => engage(this.refs.canvas, e)}/>
+            <canvas ref="canvas" onMouseDown={(e) => engage(this.refs.canvas, e)}/>
               
             <div className="slider-wrapper">
-              <input type="range" min="0" max={255 * 6} onChange={(e) => handleHueChange(this.refs.canvas, e)}/>
+               <input type="range" min="0" max={255 * 6} 
+                  onChange={(e) => handleHueChange(this.refs.canvas, e)}/>
             </div>
+
+            <div className="hue"></div>
 
          </div>
       );
@@ -33,6 +39,7 @@ class ColorGradient extends Component {
 
 ColorGradient.propTypes = {
    color: PropTypes.object.isRequired,
+   focus: PropTypes.bool.isRequired,
    initCanvas: PropTypes.func.isRequired,
    engage: PropTypes.func.isRequired,
    getColor: PropTypes.func.isRequired,
