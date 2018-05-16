@@ -17,7 +17,17 @@ input {
 /*  Components  */
 .color-gradient {
   display: flex;
-  align-items: flex-start; }
+  align-items: flex-start;
+  padding: 100px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 2px dashed grey; }
+  .color-gradient .overlay {
+    position: absolute;
+    z-index: -1;
+    width: 400px;
+    height: 400px;
+    background: pink; }
   .color-gradient .color {
     border: 1px solid #000; }
     .color-gradient .color div {

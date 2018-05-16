@@ -28,6 +28,8 @@ class ColorGradientCntr extends Component {
     canvas.width = y;
     canvas.height = y;
 
+    console.log(canvas.getContext('2d'));
+
     this.setCanvas(canvas);
   }
 
@@ -45,14 +47,12 @@ class ColorGradientCntr extends Component {
   }
 
   getColor = (canvas, e, click) => {
+    e.stopPropagation();
     if ( this.state.dragging || click ) {
-      // Mouse position
-      const x = e.nativeEvent.offsetX,
-            y = e.nativeEvent.offsetY;
+      const context = canvas.getContext('2d'); // Canvas context
+      const x = this.getPosition(canvas, e).x;
+      const y = this.getPosition(canvas, e).y;
       
-      // A reference to the context of the canvas
-      const context = canvas.getContext('2d');
-
       // The .getImageData() method returns an array of the pixel rgb colors [r,g,b,a,r,g,b,a,r...]
       const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData(x, y, width, height)
       
@@ -78,11 +78,12 @@ class ColorGradientCntr extends Component {
     const index = new Array(rgb.length);
     const indexStart = [4, 5, 1, 2];
 
-    // Range values 
+    // Range values. RGB values range from 0 to 255.
     for (let i = 0; i < range.length; i++) {
       range[i] = i * 255;
     }
 
+    // The index values for the rgb ranges.
     const l = range.length-1;
     for (let i = 0; i < index.length; i++) {
       const j = i * 2;
@@ -90,8 +91,6 @@ class ColorGradientCntr extends Component {
         return ((k === 0 && j+indexStart[0] >= l) || j+indexStart[k] > l) ? j+indexStart[k] - l : j+indexStart[k];
       });
     }
-
-    console.log('indexStart', index);
 
     // The rgb values change within specific ranges. The rgb values always range from 0 to 255.
     for (let i = 0; i < rgb.length; i++) {
@@ -144,15 +143,10 @@ class ColorGradientCntr extends Component {
   }
 
   drawCircle = (canvas, e) => {
-    // Canvas context
-    const context = canvas.getContext('2d');
-
-    // Mouse position and radius
-    // If there is no mouse event or the mouse coordinates are undefined, the coordinates from state are used.
-    const { color: c } = this.state;
-    const x = e ? e.nativeEvent.offsetX || c.x : c.x,
-          y = e ? e.nativeEvent.offsetY || c.y : c.y,
-          radius = 5;
+    const context = canvas.getContext('2d'); // Canvas context
+    const x = this.getPosition(canvas, e).x;
+    const y = this.getPosition(canvas, e).y;
+    const radius = 5; // arc radius
 
     // Circle
     context.arc(x, y, radius, 0, 2 * Math.PI);
@@ -173,6 +167,25 @@ class ColorGradientCntr extends Component {
   rgbToHex = (r, g, b) => {
     const { colorToHex } = this;
     return `#${colorToHex(r)}${colorToHex(g)}${colorToHex(b)}`;
+  }
+
+  getPosition = (canvas, e) => {
+    const { color: c } = this.state;
+    let x = c.x;
+    let y = c.y;
+
+    if (e) {
+      // Subtracting the canvas coordinates from the mouse coordinates get the coordinates relative to the canvas, which is needed to position the circle when the mouse is out the canvas.
+      // If the event values are undefined values from state are used.
+      x = e.clientX - canvas.offsetLeft || c.x;
+      y = e.clientY - canvas.offsetTop  || c.y;
+
+      // Boundaries so the circle stays with in the canvas
+      x = x < 0 ? 0 : x > canvas.width  ? canvas.width  : x;
+      y = y < 0 ? 0 : y > canvas.height ? canvas.height : y;
+    }
+    
+    return { x, y };
   }
 
   render() {
