@@ -52,6 +52,9 @@ class ColorGradientCntr extends Component {
   getColor = (canvas, e, fire) => {
     // If the fire parameter is true, the code runs. This is needed when mouse dragging isn't involved.
     if ( this.state.dragging || fire ) {
+      // The canvas is updated so the circle changes position.
+      this.setCanvas(canvas, e);
+
       // Canvas context
       const context = canvas.getContext('2d');
 
@@ -73,9 +76,6 @@ class ColorGradientCntr extends Component {
       this.setState({ 
         color: { hex, x, y }
       });
-
-      // The canvas is set so the circle changes position.
-      this.setCanvas(canvas, e);
     }
   }
 

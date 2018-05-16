@@ -18,7 +18,7 @@ class ColorGradient extends Component {
 
             <div className="color" style={{background: color.hex}}><div></div></div>
 
-            <canvas ref="canvas" 
+            <canvas className="gradient-canvas" ref="canvas" 
               onMouseDown={(e) => engage(this.refs.canvas, e)}/>
               
             <div className="slider-wrapper">
