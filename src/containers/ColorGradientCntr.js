@@ -69,7 +69,6 @@ class ColorGradientCntr extends Component {
 
       console.log('getColor', { x, y, hex });
 
-      // The selected color and coordinates are updated
       this.setState({ 
         color: { hex, x, y }
       });
