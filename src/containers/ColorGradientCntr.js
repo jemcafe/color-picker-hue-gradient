@@ -6,9 +6,6 @@ class ColorGradientCntr extends Component {
     super();
     this.state = {
       color: {
-        hue: {
-          
-        },
         hex: '#000',
         x: 0,
         y: 200
@@ -28,7 +25,7 @@ class ColorGradientCntr extends Component {
 
     // The size of the canvas. 
     // The y coordinate value of color is used for the initial canvas size because the default color is black which always located at the height value of the canvas.
-    canvas.width = y;
+    canvas.width = y+1;
     canvas.height = y;
 
     console.log(canvas.getContext('2d'));
@@ -173,7 +170,7 @@ class ColorGradientCntr extends Component {
   }
 
   colorToHex = (c) => {
-    const hex = c.toString(16);
+    const hex = c.toString(16); // The radix is 16 for hexidecimal numbers
     return hex.length === 1 ? "0" + hex : hex;
   }
 
@@ -194,8 +191,8 @@ class ColorGradientCntr extends Component {
       y = e.clientY - canvas.offsetTop  || c.y;
 
       // Boundaries so the circle stays with in the canvas
-      x = x < 0 ? 0 : x > canvas.width  ? canvas.width  : x;
-      y = y < 0 ? 0 : y > canvas.height ? canvas.height : y;
+      x = x < 0 ? 0 : x > canvas.width-1 ? canvas.width-1 : x;
+      y = y < 0 ? 0 : y > canvas.height  ? canvas.height  : y;
     }
     
     return { x, y };
