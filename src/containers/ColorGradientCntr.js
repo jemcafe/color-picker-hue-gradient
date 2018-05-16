@@ -6,6 +6,9 @@ class ColorGradientCntr extends Component {
     super();
     this.state = {
       color: {
+        hue: {
+          
+        },
         hex: '#000',
         x: 0,
         y: 200
@@ -46,18 +49,23 @@ class ColorGradientCntr extends Component {
     this.setState({ dragging: false });
   }
 
-  getColor = (canvas, e, click) => {
-    e.stopPropagation();
-    if ( this.state.dragging || click ) {
-      const context = canvas.getContext('2d'); // Canvas context
+  getColor = (canvas, e, fire) => {
+    // If the fire parameter is true, the code runs. This is needed when mouse dragging isn't involved.
+    if ( this.state.dragging || fire ) {
+      // Canvas context
+      const context = canvas.getContext('2d');
+
+      //
       const x = this.getPosition(canvas, e).x;
       const y = this.getPosition(canvas, e).y;
       
       // The .getImageData() method returns an array of the pixel rgb colors [r,g,b,a,r,g,b,a,r...]
       const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData(x, y, width, height)
       
-      // The hexadecimal color of the canvas pixel
-      const hex = this.rgbToHex(imgData[0], imgData[1], imgData[2]);
+      const r = imgData[0];
+      const g = imgData[1];
+      const b = imgData[2];
+      const hex = this.rgbToHex(r, g, b);
 
       console.log('getColor', { x, y, hex });
 
@@ -115,6 +123,8 @@ class ColorGradientCntr extends Component {
       gradientHue: { r, g, b, hex } 
     });
 
+    // The selected color and the canvas are updated.
+    this.getColor(canvas, e, true);
     this.setCanvas(canvas, e, hex);
   }
 
@@ -143,7 +153,10 @@ class ColorGradientCntr extends Component {
   }
 
   drawCircle = (canvas, e) => {
-    const context = canvas.getContext('2d'); // Canvas context
+    // Canvas Context
+    const context = canvas.getContext('2d');
+
+    //
     const x = this.getPosition(canvas, e).x;
     const y = this.getPosition(canvas, e).y;
     const radius = 5; // arc radius
@@ -176,7 +189,7 @@ class ColorGradientCntr extends Component {
 
     if (e) {
       // Subtracting the canvas coordinates from the mouse coordinates get the coordinates relative to the canvas, which is needed to position the circle when the mouse is out the canvas.
-      // If the event values are undefined values from state are used.
+      // If the event values are undefined, the values from state are used.
       x = e.clientX - canvas.offsetLeft || c.x;
       y = e.clientY - canvas.offsetTop  || c.y;
 
