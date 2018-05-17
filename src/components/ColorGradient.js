@@ -15,10 +15,10 @@ class ColorGradient extends Component {
          <div className="color-gradient">
 
             <div className="overlay" 
-              style={{ display: focus ? '' : 'none' }}
-              onMouseMove={(e) => getColor(this.refs.canvas, e)}
-              onMouseUp={() => disengage(this.refs.canvas)}
-              onMouseLeave={() => disengage(this.refs.canvas)}>
+               style={{ display: focus ? '' : 'none' }}
+               onMouseMove={(e) => getColor(this.refs.canvas, e)}
+               onMouseUp={() => disengage(this.refs.canvas)}
+               onMouseLeave={() => disengage(this.refs.canvas)}>
             </div>
 
             <div className="color" style={{background: color.hex}}><div></div></div>
@@ -26,11 +26,13 @@ class ColorGradient extends Component {
             <canvas ref="canvas" onMouseDown={(e) => engage(this.refs.canvas, e)}/>
               
             <div className="slider-wrapper">
-               <input type="range" min="0" max={255 * 6} 
+               <input className="slider" 
+                  type="range" min="0" max={255 * 6} 
                   onChange={(e) => handleHueChange(this.refs.canvas, e)}/>
             </div>
 
             <div className="hue"></div>
+            <canvas className="hue" refs="hue-canvas"/>
 
          </div>
       );
