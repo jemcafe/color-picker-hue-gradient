@@ -1,7 +1,21 @@
-/*  Base  */
+/* -------------------------- */
+/*  HELPERS                   */
+/* -------------------------- */
+@import 'helpers/variables';
+@import 'helpers/functions';
 
-@import 'base';
+/* -------------------------- */
+/*  BASE                      */
+/* -------------------------- */
+@import 'base/base';
 
-/*  Components  */
+/* -------------------------- */
+/*  MODULES                   */
+/* -------------------------- */
+// @import 'modules/';
 
-@import 'components/all';
+/* -------------------------- */
+/*  COMPONENTS                */
+/* -------------------------- */
+@import 'components/HueGradient';
+@import 'components/HsbGradient';

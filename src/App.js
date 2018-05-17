@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-// import Sketcher from './containers/SketcherCntr';
-import ColorGradient from './containers/ColorGradientCntr';
+import HueGradient from './containers/HueGradientCntr';
+import HsbGradient from './containers/HsbGradientCntr';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <Sketcher /> */}
-        <ColorGradient />
+        <HueGradient />
+        <HsbGradient />
       </div>
     );
   }

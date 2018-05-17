@@ -1,4 +1,9 @@
-/*  Base  */
+/* -------------------------- */
+/*  HELPERS                   */
+/* -------------------------- */
+/* -------------------------- */
+/*  BASE                      */
+/* -------------------------- */
 body {
   margin: 0;
   padding: 0;
@@ -8,75 +13,87 @@ body {
 ul {
   margin: 0;
   padding: 0;
-  list-style-type: none;
-  background: #ff0000; }
+  list-style-type: none; }
 
 input {
-  outline: none; }
+  outline: none;
+  margin: 0; }
 
-/*  Components  */
-.color-gradient {
+/* -------------------------- */
+/*  MODULES                   */
+/* -------------------------- */
+/* -------------------------- */
+/*  COMPONENTS                */
+/* -------------------------- */
+.hue-gradient {
   display: flex;
   align-items: flex-start;
   background: lightgrey; }
-  .color-gradient .overlay {
+  .hue-gradient .overlay {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 1;
     width: 100vw;
     height: 100vh;
-    cursor: url("../assets/colorGradientCursor.png") 10 10, auto;
+    cursor: url("../assets/circleCursor.png") 10 10, auto;
     background: pink;
     opacity: 0.5; }
-  .color-gradient .color {
+  .hue-gradient .color {
     border: 1px solid #000; }
-    .color-gradient .color div {
+    .hue-gradient .color div {
       width: 1em;
       height: 1em;
       border: 1px solid #fff; }
-  .color-gradient canvas:hover {
-    cursor: url("../assets/colorGradientCursor.png") 10 10, auto; }
-  .color-gradient .slider-wrapper {
+  .hue-gradient canvas:hover {
+    cursor: url("../assets/circleCursor.png") 10 10, auto; }
+  .hue-gradient .slider-wrapper {
     display: inline-block;
     width: 20px;
     height: 200px;
     padding: 0; }
-    .color-gradient .slider-wrapper input {
+    .hue-gradient .slider-wrapper input {
       width: 200px;
       height: 20px;
       margin: 0;
       transform-origin: 100px 100px;
       transform: rotate(-90deg); }
-  .color-gradient .hue {
+  .hue-gradient .hue {
     width: 1em;
     height: 200px;
-    background-image: linear-gradient(0deg, red, yellow, lime, cyan, blue, magenta, red); }
+    background: linear-gradient(0deg, red, yellow, lime, cyan, blue, magenta, red); }
 
-.sketcher {
+.hsb-gradient .sliders .h-gradient, .hsb-gradient .sliders .s-gradient, .hsb-gradient .sliders .b-gradient, .hsb-gradient .sliders .slider {
+  width: 180px; }
+
+.hsb-gradient {
   display: flex;
-  background: #f3f3f3; }
-  .sketcher .container {
-    border: 2px solid gray;
-    background: #e4e4e4; }
-  .sketcher .tool-customize-menu {
-    background: #ffd7c0; }
-  .sketcher .tools-canvas {
-    display: flex; }
-    .sketcher .tools-canvas .tool-menu {
+  align-items: flex-start;
+  background: lightgrey; }
+  .hsb-gradient .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background: #c0e8ff;
+    opacity: 0.5; }
+  .hsb-gradient .color {
+    border: 1px solid #000; }
+    .hsb-gradient .color div {
+      width: 1em;
+      height: 1em;
+      border: 1px solid #fff; }
+  .hsb-gradient .sliders {
+    display: flex;
+    flex-direction: column; }
+    .hsb-gradient .sliders > div {
       display: flex;
       flex-direction: column;
-      padding: 4px;
-      box-sizing: border-box;
-      background: #c0d6ff; }
-      .sketcher .tools-canvas .tool-menu > li {
-        margin: 0 0 4px 0;
-        padding: 15px;
-        box-sizing: border-box;
-        border: 2px solid transparent;
-        border-radius: 3px;
-        color: #f0f0f0;
-        background: #b68990;
-        cursor: pointer; }
-        .sketcher .tools-canvas .tool-menu > li:hover {
-          border-color: #fff; }
+      margin: 4px 0; }
+    .hsb-gradient .sliders .h-gradient, .hsb-gradient .sliders .s-gradient, .hsb-gradient .sliders .b-gradient {
+      height: 0.5em;
+      background: pink; }
+    .hsb-gradient .sliders .h-gradient {
+      background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red); }
