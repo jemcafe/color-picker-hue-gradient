@@ -63,14 +63,14 @@ input {
     height: 200px;
     background: linear-gradient(0deg, red, yellow, lime, cyan, blue, magenta, red); }
 
-.hsb-gradient .sliders .h-gradient, .hsb-gradient .sliders .s-gradient, .hsb-gradient .sliders .b-gradient, .hsb-gradient .sliders .slider {
+.hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .b-gradient, .hsl-gradient .sliders .slider {
   width: 180px; }
 
-.hsb-gradient {
+.hsl-gradient {
   display: flex;
   align-items: flex-start;
   background: lightgrey; }
-  .hsb-gradient .overlay {
+  .hsl-gradient .overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -79,21 +79,21 @@ input {
     height: 100vh;
     background: #c0e8ff;
     opacity: 0.5; }
-  .hsb-gradient .color {
+  .hsl-gradient .color {
     border: 1px solid #000; }
-    .hsb-gradient .color div {
+    .hsl-gradient .color div {
       width: 1em;
       height: 1em;
       border: 1px solid #fff; }
-  .hsb-gradient .sliders {
+  .hsl-gradient .sliders {
     display: flex;
     flex-direction: column; }
-    .hsb-gradient .sliders > div {
+    .hsl-gradient .sliders > div {
       display: flex;
       flex-direction: column;
       margin: 4px 0; }
-    .hsb-gradient .sliders .h-gradient, .hsb-gradient .sliders .s-gradient, .hsb-gradient .sliders .b-gradient {
+    .hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .b-gradient {
       height: 0.5em;
       background: pink; }
-    .hsb-gradient .sliders .h-gradient {
+    .hsl-gradient .sliders .h-gradient {
       background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red); }

@@ -13,12 +13,12 @@ class HueGradient extends Component {
       return (
          <div className="hue-gradient">
 
-            <div className="overlay" 
-               style={{ display: focus ? '' : 'none' }}
+            { focus &&
+            <div className="overlay"
                onMouseMove={(e) => getColor(this.refs.canvas, e)}
                onMouseUp={() => disengage(this.refs.canvas)}
                onMouseLeave={() => disengage(this.refs.canvas)}>
-            </div>
+            </div> }
 
             <div className="color" style={{background: color.hex}}><div></div></div>
 

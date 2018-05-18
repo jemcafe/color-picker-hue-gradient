@@ -9,45 +9,45 @@ export const colorToHex = (c) => {
 }
 
 export const rgbToHSL = (r, g, b) => {
-  const rgb = [r, g, b];
+  const RGB = [r, g, b];
   let min = 255, max = 0;
-  let H = 0, S = 0, B = 0;
+  let H = 0; 
+  let S = 0; 
+  let L = 0;
 
-  // The rgb values are converted to decimals for 8-bit color, and the smallest and largest values are found.
-  for (let i = 0; i < rgb.length; i++) {
-    rgb[i] = +(rgb[i]/255).toFixed(2);
-    max = rgb[i] > max ? rgb[i] : max;
-    min = rgb[i] < min ? rgb[i] : min;
+  // The rgb values are converted from 8-bit color values to decimals, and the smallest and largest values are found.
+  for (let i = 0; i < RGB.length; i++) {
+    RGB[i] = +(RGB[i]/255).toFixed(2);
+    max = RGB[i] > max ? RGB[i] : max;
+    min = RGB[i] < min ? RGB[i] : min;
   }
   
-  // BRIGHTNESS
-  B = Math.round((min + max)/2 * 100);  // Brightness formula
+  // LIGHTNESS
+  L = Math.round((min + max)/2 * 100);  // Brightness formula
   
   // SATURATION
-  // The color is a shade of grey when they're all equal, so I just used the max value for the percentage.
-  if (rgb[0] === rgb[1] && rgb[1] === rgb[2]) {
-    S = max * 100;
-  } else if (max === min) {
+  if (max === min) {
     S = 0;
+  } else if (RGB[0] === RGB[1] && RGB[1] === RGB[2]) {
+    // It's grayscaled when the values are equal. The max, min, r, g, or b value can be used to get the percentage.
+    S = max * 100;
   } else {
-    // 0deg or 120deg (red or green zone)
-    const bit = B > 0.5 ? 2.0 : 0;
-    // Brightness formula
-    S = Math.round((max-min)/(bit-min-max) * 100);  // Saturation formula
+    // If the lightness is greater than 50%, the saturation is darker and lighter if it's not.
+    const bit = L > 0.5 ? 2.0 : 0;
+    // Saturation formula
+    S = Math.round((max-min)/(bit-min-max) * 100);
   }
 
   // HUE
   if (S === 0) {
     H = 0;
   } else {
-    rgb.forEach((e, i) => {
+    RGB.forEach((e, i) => {
       if (e === max) {
-        // The index offset. I loops around if it goes over the array length. 
-        const index = (offset) => i+offset > rgb.length-1 ? 0 : i+offset;
-        // bit values (0deg, 120deg, or 240deg) (red, green, or blue zone)
-        const bit = i * 2;
-        // Hue formula
-        H = bit + (rgb[index(1)]-rgb[index(2)])/(max-min);
+        // The index offset. It loops around if it goes over the array length. 
+        const index = (offset, j = i+offset) => j > RGB.length-1 ? j-RGB.length : j;
+        // Hue formula    (The i * 2 is the bit value (0deg, 120deg, or 240deg) (red, green, or blue zone))
+        H = (i * 2) + (RGB[index(1)]-RGB[index(2)])/(max-min);
         // Converted to a percentage of 360
         H = Math.round(H.toFixed(2) * 60);
         // When the hue goes back to red it's negative, so 360 must be added.
@@ -56,10 +56,50 @@ export const rgbToHSL = (r, g, b) => {
     });
   }
 
-  return { H, S, B };
+  return { h: H, s: S, l: L };
 }
 
-// export const hsbToRGB = (h, s, b) => {
-//   const hsb = [h, s, b];
-//   let R = 0, G = 0, B = 0;
-// }
+export const hslToRGB = (h, s, l) => {
+  // hsl values are converted to deciamls
+  const H = +(h / 360).toFixed(3); 
+  const S = s * 0.01;
+  const L = l * 0.01;
+  let RGB = [0, 0, 0];
+
+  if (S === 0) {
+    // If saturation is zero there is no color. It's a grayscale, so the rgb values are the same.
+    RGB = RGB.map(e => Math.round(L * 0.01 * 255));
+  } else {
+    // If this lightness (L) is less than 50%, use the formula for the darker values else use the formula for the lighter values.
+    const temp_1 = L < 0.5 ? (L * (1.0 + S)) : (L + S - (L * S));
+    const temp_2 = (2 * L) - temp_1;
+    
+    // 100% / 3 = 33.333...
+    let temp_RGB = [
+      +(H + 0.333).toFixed(3),
+      +(H).toFixed(3),
+      +(H - 0.333).toFixed(3)
+    ];
+
+    // The temporary rgb values kept between 0 and 1
+    temp_RGB = temp_RGB.map(e => e < 0 ? e + 1 : e > 1 ? e - 1 : e);
+
+    // RGB
+    RGB = RGB.map((e, i) => {
+      if (6 * temp_RGB[i] < 1) {
+        return temp_2 + (temp_1 - temp_2) * 6 * temp_RGB[i];
+      } else if (2 * temp_RGB[i] < 1) {
+        return temp_1;
+      } else if (3 * temp_RGB[i] < 2) {
+        return temp_2 + (temp_1 - temp_2) * 6 * (0.666 - temp_RGB[i]);
+      } else {
+        return temp_2;
+      }
+    });
+
+    // Converted to 8-bit colors
+    RGB = RGB.map(e => Math.round(e * 255));
+  }
+
+  return { r: RGB[0], g: RGB[1], b: RGB[2] };
+}

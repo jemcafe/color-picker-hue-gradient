@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { rgbToHex, rgbToHSL } from '../helpers/colorConverters';
-import HsbGradient from '../components/HsbGradient';
+import { rgbToHex, rgbToHSL, hslToRGB } from '../helpers/colorConverters';
+import HslGradient from '../components/HslGradient';
 
-class HsbGradientCntr extends Component {
+class HslGradientCntr extends Component {
   constructor () {
     super();
     this.state = {
       color: {
-        rgb: { R: 0, G: 0, B: 0 },
-        hsb: { H: 0, S: 100, B: 0 },
+        rgb: { r: 0, g: 0, b: 0 },
+        hsl: { h: 0, s: 100, l: 0 },
         hex: '#000',
         x: 0,
         y: 200
@@ -31,15 +31,15 @@ class HsbGradientCntr extends Component {
     this.setCanvas(canvas);
   }
 
-  handleHsbChange = (property, e) => {
+  handleHslChange = (property, e) => {
     const value = +e.target.value;
     this.setState(prevState => ({
       color: {
         rgb: prevState.color.rgb,
-        hsb: {
-          H: property === 'H' ? value : prevState.color.hsb.H,
-          S: property === 'S' ? value : prevState.color.hsb.S,
-          B: property === 'B' ? value : prevState.color.hsb.B,
+        hsl: {
+          h: property === 'h' ? value : prevState.color.hsl.h,
+          s: property === 's' ? value : prevState.color.hsl.s,
+          l: property === 'l' ? value : prevState.color.hsl.l,
         },
         hex: prevState.color.hex,
         x: prevState.color.x,
@@ -73,16 +73,17 @@ class HsbGradientCntr extends Component {
       
       // The .getImageData() method returns an array of the pixel rgb colors [r,g,b,a,r,g,b,a,r...]
       const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData(x, y, width, height)
-      
-      const rgb = { R: imgData[0], G: imgData[1], B: imgData[2] };
-      const hsb = rgbToHSL(rgb.R, rgb.G, rgb.B);
-      const hex = rgbToHex(rgb.R, rgb.G, rgb.B);
+      const r = imgData[0], g = imgData[1], b = imgData[2];   // rgb values
 
-      // console.log('getColor', { rgb, hsb, hex, x, y });
-      console.log('getColor', hsb);
+      const rgb = { r, g, b };
+      const hsl = rgbToHSL(r, g, b);
+      const hex = rgbToHex(r, g, b);
+
+      // console.log('getColor', { rgb, hsl, hex, x, y });
+      console.log('getColor', hsl);
 
       this.setState({ 
-        color: { rgb, hsb, hex, x, y }
+        color: { rgb, hsl, hex, x, y }
       });
     }
   }
@@ -184,16 +185,16 @@ class HsbGradientCntr extends Component {
     const { color, focus } = this.state;
 
     return (
-      <HsbGradient
+      <HslGradient
          color={ color }
          focus={ focus }
          initCanvas={ this.initCanvas }
          engage={ this.engage }
          getColor={ this.getColor }
          disengage={ this.disengage }
-         handleHsbChange={ this.handleHsbChange} />
+         handleHslChange={ this.handleHslChange} />
     );
   }
 }
 
-export default HsbGradientCntr;
+export default HslGradientCntr;
