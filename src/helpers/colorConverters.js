@@ -9,6 +9,15 @@ export const colorToHex = (c) => {
 }
 
 export const rgbToHSL = (r, g, b) => {
+  // The HSL values equal 0, if the parameter values are out of range or not numbers.
+  if (
+    r > 255  || g > 255  || b > 255 || 
+    r < 0    || g < 0    || b < 0   ||
+    isNaN(r) || isNaN(g) || isNaN(b)
+  ) {
+    return { h: 0, s: 0, l: 0 };
+  }
+
   const RGB = [r, g, b];
   let min = 255, max = 0;
   let H = 0; 
@@ -44,9 +53,9 @@ export const rgbToHSL = (r, g, b) => {
   } else {
     RGB.forEach((e, i) => {
       if (e === max) {
-        // The index offset. It loops around if it goes over the array length. 
+        // Function expression for offsetting the index. It loops around if it's greater the array length. 
         const index = (offset, j = i+offset) => j > RGB.length-1 ? j-RGB.length : j;
-        // Hue formula    (The i * 2 is the bit value (0deg, 120deg, or 240deg) (red, green, or blue zone))
+        // Hue formula   (i * 2 is the bit value (0deg, 120deg, or 240deg) (red, green, or blue zone))
         H = (i * 2) + (RGB[index(1)]-RGB[index(2)])/(max-min);
         // Converted to a percentage of 360
         H = Math.round(H.toFixed(2) * 60);
@@ -60,17 +69,26 @@ export const rgbToHSL = (r, g, b) => {
 }
 
 export const hslToRGB = (h, s, l) => {
-  // hsl values are converted to deciamls
+  // The RGB values equal 0, if the parameter values are out of range or not numbers.
+  if (
+    h > 360  || s > 100  || l > 100 || 
+    h < 0    || s < 0    || l < 0   ||
+    isNaN(h) || isNaN(s) || isNaN(l)
+  ) {
+    return { r: 0, g: 0, b: 0 };
+  }
+
+  // The HSL values are converted to deciamls
   const H = +(h / 360).toFixed(3); 
   const S = s * 0.01;
   const L = l * 0.01;
   let RGB = [0, 0, 0];
 
   if (S === 0) {
-    // If saturation is zero there is no color. It's a grayscale, so the rgb values are the same.
+    // If saturation is 0, there is no color. It's a grayscale, so the rgb values are equal.
     RGB = RGB.map(e => Math.round(L * 0.01 * 255));
   } else {
-    // If this lightness (L) is less than 50%, use the formula for the darker values else use the formula for the lighter values.
+    // If lightness is less than 50%, use the formula for the darker values else use the formula for the lighter values.
     const temp_1 = L < 0.5 ? (L * (1.0 + S)) : (L + S - (L * S));
     const temp_2 = (2 * L) - temp_1;
     
@@ -81,8 +99,8 @@ export const hslToRGB = (h, s, l) => {
       +(H - 0.333).toFixed(3)
     ];
 
-    // The temporary rgb values kept between 0 and 1
-    temp_RGB = temp_RGB.map(e => e < 0 ? e + 1 : e > 1 ? e - 1 : e);
+    // The temporary rgb values are kept between 0 and 1
+    temp_RGB = temp_RGB.map(e => e < 0 ? e+1 : e > 1 ? e-1 : e);
 
     // RGB
     RGB = RGB.map((e, i) => {
@@ -97,7 +115,7 @@ export const hslToRGB = (h, s, l) => {
       }
     });
 
-    // Converted to 8-bit colors
+    // Converted to 8-bit color values
     RGB = RGB.map(e => Math.round(e * 255));
   }
 

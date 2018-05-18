@@ -8,7 +8,8 @@ class HslGradient extends Component {
    }
 
    render () {
-      const { color, focus, engage, getColor, disengage, handleHslChange } = this.props;
+      const { color, focus, engage, getColor, disengage, handleColorChange } = this.props;
+      console.log(color);
       
       const styles = {
          sGradient: {
@@ -36,15 +37,15 @@ class HslGradient extends Component {
             <div className="sliders">
                <div>
                   <div className="h-gradient"></div>
-                  <input className="slider" type="range" min="0" max="360" value={color.hsl.h} onChange={(e) => handleHslChange('h', e)}/>
+                  <input className="slider" type="range" min="0" max="360" value={color.hsl.h} onChange={(e) => handleColorChange(this.refs.canvas, 'h', e)}/>
                </div>
                <div>
                   <div className="s-gradient" style={ styles.sGradient }></div>
-                  <input className="slider" type="range" min="0" max="100" value={color.hsl.s} onChange={(e) => handleHslChange('s', e)}/>
+                  <input className="slider" type="range" min="0" max="100" value={color.hsl.s} onChange={(e) => handleColorChange(this.refs.canvas, 's', e)}/>
                </div>
                <div>
                   <div className="b-gradient" style={ styles.bGradient }></div>
-                  <input className="slider" type="range" min="0" max="100" value={color.hsl.l} onChange={(e) => handleHslChange('l', e)}/>
+                  <input className="slider" type="range" min="0" max="100" value={color.hsl.l} onChange={(e) => handleColorChange(this.refs.canvas, 'l', e)}/>
                </div>
             </div>
 
@@ -60,7 +61,7 @@ HslGradient.propTypes = {
    engage: PropTypes.func.isRequired,
    getColor: PropTypes.func.isRequired,
    disengage: PropTypes.func.isRequired,
-   handleHslChange: PropTypes.func.isRequired,
+   handleColorChange: PropTypes.func.isRequired,
  }
 
 export default HslGradient;

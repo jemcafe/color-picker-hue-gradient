@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { rgbToHex } from '../helpers/colorConverters';
 import HueGradient from '../components/HueGradient';
 
 class HueGradientCntr extends Component {
@@ -66,7 +67,7 @@ class HueGradientCntr extends Component {
       const r = imgData[0];
       const g = imgData[1];
       const b = imgData[2];
-      const hex = this.rgbToHex(r, g, b);
+      const hex = rgbToHex(r, g, b);
 
       console.log('getColor', { r, g, b, hex, x, y });
 
@@ -113,7 +114,7 @@ class HueGradientCntr extends Component {
     const r = rgb[0], 
           g = rgb[1], 
           b = rgb[2], 
-          hex = this.rgbToHex(r, g, b);
+          hex = rgbToHex(r, g, b);
 
     console.log( 'handleHueChange', { r, g, b, hex });
 
@@ -177,16 +178,6 @@ class HueGradientCntr extends Component {
 
     // The path is reset, so the shape is not one long path
     context.beginPath();
-  }
-
-  rgbToHex = (r, g, b) => {
-    const { colorToHex: cth } = this;
-    return `#${cth(r)}${cth(g)}${cth(b)}`;
-  }
-  
-  colorToHex = (c) => {
-    const hex = c.toString(16); // The radix is 16 for hexidecimal numbers
-    return hex.length === 1 ? "0" + hex : hex;
   }
 
   getPosition = (canvas, e) => {
