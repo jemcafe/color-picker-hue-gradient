@@ -63,7 +63,7 @@ input {
     height: 200px;
     background: linear-gradient(0deg, red, yellow, lime, cyan, blue, magenta, red); }
 
-.hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .b-gradient, .hsl-gradient .sliders .slider {
+.hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .l-gradient, .hsl-gradient .sliders .slider {
   width: 180px; }
 
 .hsl-gradient {
@@ -92,8 +92,6 @@ input {
       display: flex;
       flex-direction: column;
       margin: 4px 0; }
-    .hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .b-gradient {
+    .hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .l-gradient {
       height: 0.5em;
       background: pink; }
-    .hsl-gradient .sliders .h-gradient {
-      background: linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red); }

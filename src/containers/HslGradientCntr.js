@@ -7,11 +7,11 @@ class HslGradientCntr extends Component {
     super();
     this.state = {
       color: {
-        rgb: { r: 0, g: 0, b: 0 },
-        hsl: { h: 0, s: 100, l: 0 },
-        hex: '#000',
+        rgb: { r: 255, g: 0, b: 0 },
+        hsl: { h: 0, s: 100, l: 50 },
+        hex: '#ff0000',
         x: 0,
-        y: 200
+        y: 100
       },
       dragging: false,
       focus: false
@@ -19,38 +19,37 @@ class HslGradientCntr extends Component {
   }
 
   initCanvas = (canvas) => {
-    // The size of the canvas. 
-    // The y coordinate value of color is used for the initial canvas size because the default color is black which always located at the height value of the canvas.
+    // The size of the canvas.
     // Needed to add 1 to the width to prevent the getImageData method from returning values of 0 when trying to get the color at the edge of the canvas (the right side only).
     const { color: { y } } = this.state;
-    canvas.width = y+1;
-    canvas.height = y;
+    canvas.width = (y * 2) + 1;
+    canvas.height = y * 2;
 
     console.log(canvas.getContext('2d'));
 
     this.setCanvas(canvas);
   }
 
-  handleColorChange = (canvas, property, e) => {
+  handleColorChange = (property, e) => {
     const value = +e.target.value;
 
-    this.setState(prevState => {
-      const hsl = {
-        h: property === 'h' ? value : prevState.color.hsl.h,
-        s: property === 's' ? value : prevState.color.hsl.s,
-        l: property === 'l' ? value : prevState.color.hsl.l
-      }
-      const rgb = hslToRGB(hsl.h, hsl.s, hsl.l);
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
-      const x = prevState.color.x;
-      const y = prevState.color.y;
+    // if ( !isNaN(value) ) {
+      this.setState(prevState => {
+        const hsl = {
+          h: (property === 'h' && value <= 360) ? value : prevState.color.hsl.h,
+          s: (property === 's' && value <= 100) ? value : prevState.color.hsl.s,
+          l: (property === 'l' && value <= 100) ? value : prevState.color.hsl.l
+        }
+        const rgb = hslToRGB(hsl.h, hsl.s, hsl.l);
+        const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+        const x = prevState.color.x;
+        const y = prevState.color.y;
 
-      return {
-        color: { rgb, hsl, hex, x, y }
-      }
-    });
-
-    this.setCanvas(canvas);
+        return {
+          color: { rgb, hsl, hex, x, y }
+        }
+      });
+    // }
   }
 
   engage = (canvas, e) => {
@@ -72,7 +71,7 @@ class HslGradientCntr extends Component {
       const context = canvas.getContext('2d');
 
       // Color location (mouse location)
-      const pos = this.getMousePosition(canvas, e);
+      const pos = this.getPosition(canvas, e);
       const x = pos.x;
       const y = pos.y;
       
@@ -139,7 +138,7 @@ class HslGradientCntr extends Component {
     const context = canvas.getContext('2d');
 
     // Arc values
-    const pos = this.getMousePosition(canvas, e);
+    const pos = this.getPosition(canvas, e);
     const x = pos.x;
     const y = pos.y;
     const radius = 5; // arc radius
@@ -164,7 +163,7 @@ class HslGradientCntr extends Component {
     context.beginPath();
   }
 
-  getMousePosition = (canvas, e) => {
+  getPosition = (canvas, e) => {
     const { color: c } = this.state;
     let x = c.x;
     let y = c.y;
@@ -180,13 +179,6 @@ class HslGradientCntr extends Component {
       y = y < 0 ? 0 : y > canvas.height  ? canvas.height  : y;
     }
     
-    return { x, y };
-  }
-
-  setCirclePosition = (canvas) => {
-    const { color: { h, s, l } } = this.state;
-    const x = Math.round((h * canvas.width)/360);
-    const y = this.state.color.y;
     return { x, y };
   }
 

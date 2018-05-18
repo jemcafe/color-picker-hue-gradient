@@ -12,11 +12,26 @@ class HslGradient extends Component {
       console.log(color);
       
       const styles = {
-         sGradient: {
-            background:`linear-gradient(90deg, hsl(0, 0%, ${color.hsl.l}%), hsl(${color.hsl.h},100%,${Math.round(color.hsl.l/2)}%)`
+         color: {
+            background: `hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`
          },
-         bGradient: {
-            background:`linear-gradient(90deg, #000, hsl(${color.hsl.h},${color.hsl.s}%,${Math.round(color.hsl.l/2)}%))`
+         hGradient: {
+            background:`linear-gradient( 
+               90deg, 
+               hsl(0, 100%, ${color.hsl.l}%),
+               hsl(60, 100%, ${color.hsl.l}%),
+               hsl(120, 100%, ${color.hsl.l}%),
+               hsl(180, 100%, ${color.hsl.l}%),
+               hsl(240, 100%, ${color.hsl.l}%),
+               hsl(300, 100%, ${color.hsl.l}%),
+               hsl(360, 100%, ${color.hsl.l}%)
+            )`
+         },
+         sGradient: {
+            background:`linear-gradient(90deg, hsl(0, 0%, ${color.hsl.l}%), hsl(${color.hsl.h},100%,${Math.round(color.hsl.l)}%)`
+         },
+         lGradient: {
+            background:`linear-gradient(90deg, #000, hsl(${color.hsl.h}, 100%, 50%), #fff)`
          }
       }
       
@@ -30,22 +45,25 @@ class HslGradient extends Component {
                onMouseLeave={() => disengage(this.refs.canvas)}>
             </div> }
 
-            <div className="color" style={{background: color.hex}}><div></div></div>
+            <div className="color" style={ styles.color }><div></div></div>
 
             <canvas ref="canvas" onMouseDown={(e) => engage(this.refs.canvas, e)}/>
               
             <div className="sliders">
                <div>
-                  <div className="h-gradient"></div>
-                  <input className="slider" type="range" min="0" max="360" value={color.hsl.h} onChange={(e) => handleColorChange(this.refs.canvas, 'h', e)}/>
+                  <div className="h-gradient" style={ styles.hGradient }></div>
+                  <input className="slider" type="range" min="0" max="360" value={color.hsl.h} onChange={(e) => handleColorChange('h', e)}/>
+                  <input className="number-input" value={color.hsl.h} onChange={(e) => handleColorChange('h', e)}/>
                </div>
                <div>
                   <div className="s-gradient" style={ styles.sGradient }></div>
-                  <input className="slider" type="range" min="0" max="100" value={color.hsl.s} onChange={(e) => handleColorChange(this.refs.canvas, 's', e)}/>
+                  <input className="slider" type="range" min="0" max="100" value={color.hsl.s} onChange={(e) => handleColorChange('s', e)}/>
+                  <input className="number-input" value={color.hsl.s} onChange={(e) => handleColorChange('s', e)}/>
                </div>
                <div>
-                  <div className="b-gradient" style={ styles.bGradient }></div>
-                  <input className="slider" type="range" min="0" max="100" value={color.hsl.l} onChange={(e) => handleColorChange(this.refs.canvas, 'l', e)}/>
+                  <div className="l-gradient" style={ styles.lGradient }></div>
+                  <input className="slider" type="range" min="0" max="100" value={color.hsl.l} onChange={(e) => handleColorChange('l', e)}/>
+                  <input className="number-input" value={color.hsl.l} onChange={(e) => handleColorChange('l', e)}/>
                </div>
             </div>
 
