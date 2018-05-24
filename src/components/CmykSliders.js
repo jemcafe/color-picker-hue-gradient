@@ -31,7 +31,7 @@ class CymkSliders extends Component {
       }
       
       return (
-         <div className="cmyk-gradient">
+         <div className="cmyk-sliders">
 
             { focus &&
             <div className="overlay"

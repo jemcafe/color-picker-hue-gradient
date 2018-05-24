@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { rgbToHex, rgbToCMYK, cmykToRGB } from '../helpers/colorConversion';
-import { getPosition } from '../helpers/canvas';
+import { setGradientColor, getPosition } from '../helpers/canvas';
 import CmykSliders from '../components/CmykSliders';
 
 class CmykSlidersCntr extends Component {
@@ -92,7 +92,7 @@ class CmykSlidersCntr extends Component {
   }
 
   setCanvas = (canvas, e) => {
-    this.setGradientColor(canvas);
+    setGradientColor(canvas);
     this.drawCircle(canvas, e);
   }
 

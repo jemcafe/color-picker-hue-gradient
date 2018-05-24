@@ -27,7 +27,7 @@ class RgbSliders extends Component {
       }
       
       return (
-         <div className="rgb-gradient">
+         <div className="rgb-sliders">
 
             { focus &&
             <div className="overlay"

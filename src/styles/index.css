@@ -30,7 +30,7 @@ input {
   align-items: flex-start;
   background: lightgrey; }
   .hue-gradient .overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 1;
@@ -63,14 +63,14 @@ input {
     height: 200px;
     background: linear-gradient(0deg, red, yellow, lime, cyan, blue, magenta, red); }
 
-.hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .l-gradient, .hsl-gradient .sliders .slider, .rgb-gradient .sliders .r-gradient, .rgb-gradient .sliders .g-gradient, .rgb-gradient .sliders .b-gradient, .rgb-gradient .sliders .slider, .cmyk-gradient .sliders .c-gradient, .cmyk-gradient .sliders .m-gradient, .cmyk-gradient .sliders .y-gradient, .cmyk-gradient .sliders .k-gradient, .cmyk-gradient .sliders .slider {
+.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
   width: 180px; }
 
-.hsl-gradient {
+.hsl-sliders {
   display: flex;
   align-items: flex-start;
   background: lightgrey; }
-  .hsl-gradient .overlay {
+  .hsl-sliders .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -79,31 +79,31 @@ input {
     height: 100vh;
     background: #c0e8ff;
     opacity: 0.5; }
-  .hsl-gradient .color {
+  .hsl-sliders .color {
     border: 1px solid #000; }
-    .hsl-gradient .color div {
+    .hsl-sliders .color div {
       width: 1em;
       height: 1em;
       border: 1px solid #fff; }
-  .hsl-gradient .sliders {
+  .hsl-sliders .sliders {
     display: flex;
     flex-direction: column; }
-    .hsl-gradient .sliders > div {
+    .hsl-sliders .sliders > div {
       display: flex;
       flex-direction: column;
       margin: 4px 0; }
-    .hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .l-gradient {
+    .hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient {
       height: 0.5em;
       background: pink; }
 
-.hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .l-gradient, .hsl-gradient .sliders .slider, .rgb-gradient .sliders .r-gradient, .rgb-gradient .sliders .g-gradient, .rgb-gradient .sliders .b-gradient, .rgb-gradient .sliders .slider, .cmyk-gradient .sliders .c-gradient, .cmyk-gradient .sliders .m-gradient, .cmyk-gradient .sliders .y-gradient, .cmyk-gradient .sliders .k-gradient, .cmyk-gradient .sliders .slider {
+.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
   width: 180px; }
 
-.rgb-gradient {
+.rgb-sliders {
   display: flex;
   align-items: flex-start;
   background: lightgrey; }
-  .rgb-gradient .overlay {
+  .rgb-sliders .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -112,31 +112,31 @@ input {
     height: 100vh;
     background: #c0ffce;
     opacity: 0.5; }
-  .rgb-gradient .color {
+  .rgb-sliders .color {
     border: 1px solid #000; }
-    .rgb-gradient .color div {
+    .rgb-sliders .color div {
       width: 1em;
       height: 1em;
       border: 1px solid #fff; }
-  .rgb-gradient .sliders {
+  .rgb-sliders .sliders {
     display: flex;
     flex-direction: column; }
-    .rgb-gradient .sliders > div {
+    .rgb-sliders .sliders > div {
       display: flex;
       flex-direction: column;
       margin: 4px 0; }
-    .rgb-gradient .sliders .r-gradient, .rgb-gradient .sliders .g-gradient, .rgb-gradient .sliders .b-gradient {
+    .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient {
       height: 0.5em;
       background: pink; }
 
-.hsl-gradient .sliders .h-gradient, .hsl-gradient .sliders .s-gradient, .hsl-gradient .sliders .l-gradient, .hsl-gradient .sliders .slider, .rgb-gradient .sliders .r-gradient, .rgb-gradient .sliders .g-gradient, .rgb-gradient .sliders .b-gradient, .rgb-gradient .sliders .slider, .cmyk-gradient .sliders .c-gradient, .cmyk-gradient .sliders .m-gradient, .cmyk-gradient .sliders .y-gradient, .cmyk-gradient .sliders .k-gradient, .cmyk-gradient .sliders .slider {
+.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
   width: 180px; }
 
-.cmyk-gradient {
+.cmyk-sliders {
   display: flex;
   align-items: flex-start;
   background: lightgrey; }
-  .cmyk-gradient .overlay {
+  .cmyk-sliders .overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -145,19 +145,52 @@ input {
     height: 100vh;
     background: #dbc0ff;
     opacity: 0.5; }
-  .cmyk-gradient .color {
+  .cmyk-sliders .color {
     border: 1px solid #000; }
-    .cmyk-gradient .color div {
+    .cmyk-sliders .color div {
       width: 1em;
       height: 1em;
       border: 1px solid #fff; }
-  .cmyk-gradient .sliders {
+  .cmyk-sliders .sliders {
     display: flex;
     flex-direction: column; }
-    .cmyk-gradient .sliders > div {
+    .cmyk-sliders .sliders > div {
       display: flex;
       flex-direction: column;
       margin: 4px 0; }
-    .cmyk-gradient .sliders .c-gradient, .cmyk-gradient .sliders .m-gradient, .cmyk-gradient .sliders .y-gradient, .cmyk-gradient .sliders .k-gradient {
+    .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient {
+      height: 0.5em;
+      background: pink; }
+
+.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
+  width: 180px; }
+
+.lab-sliders {
+  display: flex;
+  align-items: flex-start;
+  background: lightgrey; }
+  .lab-sliders .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    background: #f6ffc0;
+    opacity: 0.5; }
+  .lab-sliders .color {
+    border: 1px solid #000; }
+    .lab-sliders .color div {
+      width: 1em;
+      height: 1em;
+      border: 1px solid #fff; }
+  .lab-sliders .sliders {
+    display: flex;
+    flex-direction: column; }
+    .lab-sliders .sliders > div {
+      display: flex;
+      flex-direction: column;
+      margin: 4px 0; }
+    .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient {
       height: 0.5em;
       background: pink; }

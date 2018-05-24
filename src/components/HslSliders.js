@@ -11,6 +11,7 @@ class HslSliders extends Component {
     const { color, focus, engage, getColor, disengage, handleColorChange } = this.props;
     console.log('HSL color', color);
     
+    // Inline 
     const styles = {
       color: {
         background:`hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`
@@ -31,7 +32,7 @@ class HslSliders extends Component {
     }
     
     return (
-      <div className="hsl-gradient">
+      <div className="hsl-sliders">
 
         { focus &&
         <div className="overlay"
