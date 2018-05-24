@@ -10,6 +10,12 @@ class HueGradient extends Component {
   render () {
     const { color, focus, engage, getColor, disengage, handleHueChange } = this.props;
     console.log('Hue color', color);
+
+    const styles = {
+      color: {
+        background: color.hex
+      }
+    }
       
     return (
       <div className="hue-gradient">
@@ -21,7 +27,7 @@ class HueGradient extends Component {
           onMouseLeave={() => disengage(this.refs.canvas)}>
         </div> }
 
-        <div className="color" style={{background: color.hex}}><div></div></div>
+        <div className="color" style={ styles.color }><div></div></div>
 
         <canvas ref="canvas" onMouseDown={(e) => engage(this.refs.canvas, e)}/>
           
