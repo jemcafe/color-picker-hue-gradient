@@ -9,7 +9,7 @@ class CmykSlidersCntr extends Component {
     this.state = {
       color: {
         rgb: { r: 255, g: 0, b: 0 },
-        cmyk: { c: 0, m: 100, y: 100, k: 0, r: 255, g: 0, b: 0 },
+        cmyk: { c: 0, m: 100, y: 100, k: 0 },
         hex: '#ff0000',
         x: 0,
         y: 100
@@ -42,9 +42,6 @@ class CmykSlidersCntr extends Component {
         k: (property === 'k' && value <= 100) ? value : prevState.color.cmyk.k
       }
       const rgb = cmykToRGB(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
-      cmyk.r = rgb.r;
-      cmyk.g = rgb.g;
-      cmyk.b = rgb.b;
       const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
       const x = prevState.color.x;
       const y = prevState.color.y;
@@ -86,9 +83,6 @@ class CmykSlidersCntr extends Component {
       // Color values
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
       const cmyk = rgbToCMYK(rgb.r, rgb.g, rgb.b);
-      cmyk.r = rgb.r;
-      cmyk.g = rgb.g;
-      cmyk.b = rgb.b;
       const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({ 

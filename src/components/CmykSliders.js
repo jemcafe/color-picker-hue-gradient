@@ -11,21 +11,22 @@ class CymkSliders extends Component {
       const { color, focus, engage, getColor, disengage, handleColorChange } = this.props;
       console.log('CMYK color', color);
       
+      // CSS3 does not have the cmyk function, so I have to use rgb values to display the colors for CMYK.
       const styles = {
          color: {
             background: `rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`
          },
          cGradient: {
-            background:`linear-gradient(90deg, rgb(255, ${color.cmyk.g}, ${color.cmyk.b}), rgb(0, ${color.cmyk.g}, ${color.cmyk.b})`
+            background:`linear-gradient(90deg, rgb(255, ${color.rgb.g}, ${color.rgb.b}), rgb(0, ${color.rgb.g}, ${color.rgb.b})`
          },
          mGradient: {
-            background:`linear-gradient(90deg, rgb(${color.cmyk.r}, 255, ${color.cmyk.b}), rgb(${color.cmyk.r}, 0, ${color.cmyk.b})`
+            background:`linear-gradient(90deg, rgb(${color.rgb.r}, 255, ${color.rgb.b}), rgb(${color.rgb.r}, 0, ${color.rgb.b})`
          },
          yGradient: {
-            background:`linear-gradient(90deg, rgb(${color.cmyk.r}, ${color.cmyk.g}, 255), rgb(${color.cmyk.r}, ${color.cmyk.g}, 0)`
+            background:`linear-gradient(90deg, rgb(${color.rgb.r}, ${color.rgb.g}, 255), rgb(${color.rgb.r}, ${color.rgb.g}, 0)`
          },
          kGradient: {
-            background:`linear-gradient(90deg, rgb(${color.cmyk.r}, ${color.cmyk.g}, ${color.cmyk.b}), rgb(0, 0, 0))`
+            background:`linear-gradient(90deg, rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}), rgb(0, 0, 0))`
          }
       }
       
