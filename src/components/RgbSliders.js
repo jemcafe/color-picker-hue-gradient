@@ -44,17 +44,17 @@ class RgbSliders extends Component {
                <div>
                   <div className="r-gradient" style={ styles.rGradient }></div>
                   <input className="slider" type="range" min="0" max="255" value={color.rgb.r} onChange={(e) => handleColorChange('r', e)}/>
-                  <input value={color.rgb.r} onChange={(e) => handleColorChange('h', e)}/>
+                  <input value={color.rgb.r} onChange={(e) => handleColorChange('r', e)}/>
                </div>
                <div>
                   <div className="g-gradient" style={ styles.gGradient }></div>
                   <input className="slider" type="range" min="0" max="255" value={color.rgb.g} onChange={(e) => handleColorChange('g', e)}/>
-                  <input value={color.rgb.g} onChange={(e) => handleColorChange('s', e)}/>
+                  <input value={color.rgb.g} onChange={(e) => handleColorChange('g', e)}/>
                </div>
                <div>
                   <div className="b-gradient" style={ styles.bGradient }></div>
                   <input className="slider" type="range" min="0" max="255" value={color.rgb.b} onChange={(e) => handleColorChange('b', e)}/>
-                  <input value={color.rgb.b} onChange={(e) => handleColorChange('l', e)}/>
+                  <input value={color.rgb.b} onChange={(e) => handleColorChange('b', e)}/>
                </div>
             </div>
 
