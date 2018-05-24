@@ -9,6 +9,7 @@ class HueGradient extends Component {
 
    render () {
       const { color, focus, engage, getColor, disengage, handleHueChange } = this.props;
+      console.log('Hue color', color);
       
       return (
          <div className="hue-gradient">

@@ -32,7 +32,7 @@ class RgbSlidersCntr extends Component {
   handleColorChange = (property, e) => {
     const value = +e.target.value;
 
-   this.setState(prevState => {
+    this.setState(prevState => {
       const rgb = {
          r: property === 'r' ? value : prevState.color.rgb.r,
          g: property === 'g' ? value : prevState.color.rgb.g,
@@ -45,7 +45,7 @@ class RgbSlidersCntr extends Component {
       return {
          color: { rgb, hex, x, y }
       }
-   });
+    });
   }
 
   engage = (canvas, e) => {
@@ -175,13 +175,13 @@ class RgbSlidersCntr extends Component {
 
     return (
       <RgbSliders
-         color={ color }
-         focus={ focus }
-         initCanvas={ this.initCanvas }
-         engage={ this.engage }
-         getColor={ this.getColor }
-         disengage={ this.disengage }
-         handleColorChange={ this.handleColorChange} />
+        color={ color }
+        focus={ focus }
+        initCanvas={ this.initCanvas }
+        engage={ this.engage }
+        getColor={ this.getColor }
+        disengage={ this.disengage }
+        handleColorChange={ this.handleColorChange} />
     );
   }
 }

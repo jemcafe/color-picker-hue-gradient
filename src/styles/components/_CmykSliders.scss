@@ -2,7 +2,7 @@
    width: 180px;
 }
 
-.rgb-gradient {
+.cmyk-gradient {
    display: flex;
    align-items: flex-start;
    background: lightgrey;
@@ -37,7 +37,7 @@
          margin: 4px 0;
       }
 
-      .r-gradient, .g-gradient, .b-gradient {
+      .c-gradient, .m-gradient, .y-gradient, .k-gradient {
          @extend %sliderWidth;
          height: 0.5em;
          background: pink;

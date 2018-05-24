@@ -14,9 +14,7 @@ export const rgbToHSL = (r, g, b) => {
     r > 255  || g > 255  || b > 255 || 
     r < 0    || g < 0    || b < 0   ||
     isNaN(r) || isNaN(g) || isNaN(b)
-  ) {
-    return { h: 0, s: 0, l: 0 };
-  }
+  ) return { h: 0, s: 0, l: 0 };
 
   const RGB = [r, g, b];
   let min = 255, max = 0;
@@ -74,9 +72,7 @@ export const hslToRGB = (h, s, l) => {
     h > 360  || s > 100  || l > 100 || 
     h < 0    || s < 0    || l < 0   ||
     isNaN(h) || isNaN(s) || isNaN(l)
-  ) {
-    return { r: 0, g: 0, b: 0 };
-  }
+  ) return { r: 0, g: 0, b: 0 };
 
   // The HSL values are converted to deciamls
   const H = +(h / 360).toFixed(3); 
@@ -121,3 +117,84 @@ export const hslToRGB = (h, s, l) => {
 
   return { r: RGB[0], g: RGB[1], b: RGB[2] };
 }
+
+export const cmyk = (c, m, y, k) => {
+  let C = +(c * 0.01).toFixed(2);
+  let M = +(m * 0.01).toFixed(2);
+  let Y = +(y * 0.01).toFixed(2);
+  const K = +(k * 0.01).toFixed(2);
+
+  if (k === 1) {
+    C = 0;
+    M = 0;
+    Y = 0;
+  } else {
+    C = +((C - K)/(1 - K)).toFixed(2);
+    M = +((M - K)/(1 - K)).toFixed(2);
+    Y = +((Y - K)/(1 - K)).toFixed(2);
+  }
+
+  C *= 100;
+  M *= 100;
+  Y *= 100;
+
+  return { c: C, m: M, y: Y, k: K };
+}
+
+export const rgbToCMYK = (r, g, b) => {
+  // If the parameter values are out of range or not numbers. The default is returned.
+  if (
+    r > 255  || g > 255  || b > 255 || 
+    r < 0    || g < 0    || b < 0   ||
+    isNaN(r) || isNaN(g) || isNaN(b)
+  ) return { c: 0, m: 0, y: 0, k: 1 };
+
+  // 
+  let C = 1 - (r/255);
+  let M = 1 - (g/255);
+  let Y = 1 - (b/255);
+  let K = 0;
+  let temp_K = 1;
+
+  // Find the smallest CMY value
+  if (C < temp_K) temp_K = C;
+  if (M < temp_K) temp_K = M;
+  if (Y < temp_K) temp_K = Y;
+
+  if (temp_K === 1) {  // The color is black
+    C = 0;
+    M = 0;
+    Y = 0;
+  } else {
+    // Formula for CMY values
+    C = +((C - K)/(1 - K)).toFixed(2);
+    M = +((M - K)/(1 - K)).toFixed(2);
+    Y = +((Y - K)/(1 - K)).toFixed(2);
+  }
+  K = +temp_K.toFixed(2);
+
+  C *= 100;
+  M *= 100;
+  Y *= 100;
+  K *= 100;
+  
+  return { c: C, m: M, y: Y, k: K };
+}
+
+// export const cmykToRGB = (c, m, y, k) => {
+//   const CMYK = {
+//     c: Math.floor((c * 255)/100),
+//     m: Math.floor((m * 255)/100),
+//     y: Math.floor((y * 255)/100),
+//     k: Math.floor((k * 255)/100),
+//   }
+//   const RGB = [0, 0, 0];
+
+//   if (k === 1) {
+//     const RGB = [0, 0, 0];
+//   } else {
+
+//   }
+  
+//   return { r: RGB[0], g: RGB[1], b: RGB[2] };
+// }

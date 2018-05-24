@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { rgbToHex, rgbToHSL, hslToRGB } from '../helpers/colorConverters';
-import HslSliders from '../components/HslSliders';
+import { rgbToHex, rgbToCMYK } from '../helpers/colorConverters';
+import CmykSliders from '../components/CmykSliders';
 
-class HslSlidersCntr extends Component {
+class CmykSlidersCntr extends Component {
   constructor () {
     super();
     this.state = {
       color: {
         rgb: { r: 255, g: 0, b: 0 },
-        hsl: { h: 0, s: 100, l: 50 },
+        cmyk: { r: 255, g: 0, b: 0, c: 0, m: 100, y: 100, k: 0 },
         hex: '#ff0000',
         x: 0,
         y: 100
@@ -34,18 +34,19 @@ class HslSlidersCntr extends Component {
     const value = +e.target.value;
 
     this.setState(prevState => {
-      const hsl = {
-        h: (property === 'h' && value <= 360) ? value : prevState.color.hsl.h,
-        s: (property === 's' && value <= 100) ? value : prevState.color.hsl.s,
-        l: (property === 'l' && value <= 100) ? value : prevState.color.hsl.l
+      const cmyk = {
+         c: (property === 'c' && value <= 100) ? value : prevState.color.cmyk.c,
+         m: (property === 'm' && value <= 100) ? value : prevState.color.cmyk.m,
+         y: (property === 'y' && value <= 100) ? value : prevState.color.cmyk.y,
+         k: (property === 'k' && value <= 100) ? value : prevState.color.cmyk.k
       }
-      const rgb = hslToRGB(hsl.h, hsl.s, hsl.l);
+      const rgb = prevState.color.rgb;
       const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
       const x = prevState.color.x;
       const y = prevState.color.y;
 
       return {
-        color: { rgb, hsl, hex, x, y }
+         color: { rgb, cmyk, hex, x, y }
       }
     });
   }
@@ -78,11 +79,11 @@ class HslSlidersCntr extends Component {
 
       // Color values
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
-      const hsl = rgbToHSL(rgb.r, rgb.g, rgb.b);
+      const cmyk = rgbToCMYK(rgb.r, rgb.g, rgb.b);
       const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({ 
-        color: { rgb, hsl, hex, x, y }
+        color: { rgb, cmyk, hex, x, y }
       });
     }
   }
@@ -177,7 +178,7 @@ class HslSlidersCntr extends Component {
     const { color, focus } = this.state;
 
     return (
-      <HslSliders
+      <CmykSliders
         color={ color }
         focus={ focus }
         initCanvas={ this.initCanvas }
@@ -189,4 +190,4 @@ class HslSlidersCntr extends Component {
   }
 }
 
-export default HslSlidersCntr;
+export default CmykSlidersCntr;

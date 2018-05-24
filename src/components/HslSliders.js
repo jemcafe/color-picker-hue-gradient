@@ -9,7 +9,7 @@ class HslSliders extends Component {
 
    render () {
       const { color, focus, engage, getColor, disengage, handleColorChange } = this.props;
-      console.log(color);
+      console.log('HSL color', color);
       
       const styles = {
          color: {

@@ -7,12 +7,10 @@ class HueGradientCntr extends Component {
     super();
     this.state = {
       color: {
-        r: 0,
-        g: 0,
-        b: 0,
-        hex: '#000',
-        x: 0,
-        y: 200
+        rgb: { r: 255, g: 0, b: 0 },
+        hex: '#ff0000',
+        x: 200,
+        y: 0
       },
       gradientHue: {
         r: 255,
@@ -27,11 +25,11 @@ class HueGradientCntr extends Component {
 
   initCanvas = (canvas) => {
     // The size of the canvas. 
-    // The y coordinate value of color is used for the initial canvas size because the default color is black which always located at the height value of the canvas.
+    // The coordinate value of color is used for the initial canvas size because the default color is the size of the canvas.
     // Needed to add 1 to the width to prevent the getImageData method from returning values of 0 when trying to get the color at the edge of the canvas (the right side only).
-    const { color: { y } } = this.state;
-    canvas.width = y+1;
-    canvas.height = y;
+    const { color: { x } } = this.state;
+    canvas.width = x + 1;
+    canvas.height = x;
 
     console.log(canvas.getContext('2d'));
 
@@ -64,15 +62,13 @@ class HueGradientCntr extends Component {
       // The .getImageData() method returns an array of the pixel rgb colors [r,g,b,a,r,g,b,a,r...]
       const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData(x, y, width, height)
       
-      const r = imgData[0];
-      const g = imgData[1];
-      const b = imgData[2];
-      const hex = rgbToHex(r, g, b);
+      const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
+      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
 
-      console.log('getColor', { r, g, b, hex, x, y });
+      console.log('getColor', { rgb, hex, x, y });
 
       this.setState({ 
-        color: { r, g, b, hex, x, y }
+        color: { rgb, hex, x, y }
       });
     }
   }
@@ -193,13 +189,13 @@ class HueGradientCntr extends Component {
 
     return (
       <HueGradient
-         color={ color }
-         focus={ focus }
-         initCanvas={ this.initCanvas }
-         engage={ this.engage }
-         getColor={ this.getColor }
-         disengage={ this.disengage }
-         handleHueChange={ this.handleHueChange } />
+        color={ color }
+        focus={ focus }
+        initCanvas={ this.initCanvas }
+        engage={ this.engage }
+        getColor={ this.getColor }
+        disengage={ this.disengage }
+        handleHueChange={ this.handleHueChange } />
     );
   }
 }

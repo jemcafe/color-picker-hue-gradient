@@ -9,7 +9,7 @@ class RgbSliders extends Component {
 
    render () {
       const { color, focus, engage, getColor, disengage, handleColorChange } = this.props;
-      console.log(color);
+      console.log('RGB color', color);
       
       const styles = {
          color: {
