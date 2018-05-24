@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { rgbToHex, rgbToCMYK } from '../helpers/colorConversion';
+import { rgbToHex, rgbToCMYK, cmykToRGB } from '../helpers/colorConversion';
 import { getPosition } from '../helpers/canvas';
 import CmykSliders from '../components/CmykSliders';
 
@@ -9,7 +9,7 @@ class CmykSlidersCntr extends Component {
     this.state = {
       color: {
         rgb: { r: 255, g: 0, b: 0 },
-        cmyk: { c: 0, m: 100, y: 100, k: 0 },
+        cmyk: { c: 0, m: 100, y: 100, k: 0, r: 255, g: 0, b: 0 },
         hex: '#ff0000',
         x: 0,
         y: 100
@@ -36,19 +36,21 @@ class CmykSlidersCntr extends Component {
 
     this.setState(prevState => {
       const cmyk = {
-         c: (property === 'c' && value <= 100) ? value : prevState.color.cmyk.c,
-         m: (property === 'm' && value <= 100) ? value : prevState.color.cmyk.m,
-         y: (property === 'y' && value <= 100) ? value : prevState.color.cmyk.y,
-         k: (property === 'k' && value <= 100) ? value : prevState.color.cmyk.k
+        c: (property === 'c' && value <= 100) ? value : prevState.color.cmyk.c,
+        m: (property === 'm' && value <= 100) ? value : prevState.color.cmyk.m,
+        y: (property === 'y' && value <= 100) ? value : prevState.color.cmyk.y,
+        k: (property === 'k' && value <= 100) ? value : prevState.color.cmyk.k
       }
-      // const rgb = cmykToRGB(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
-      const rgb = prevState.color.rgb;
+      const rgb = cmykToRGB(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
+      cmyk.r = rgb.r;
+      cmyk.g = rgb.g;
+      cmyk.b = rgb.b;
       const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
       const x = prevState.color.x;
       const y = prevState.color.y;
 
       return {
-         color: { rgb, cmyk, hex, x, y }
+        color: { rgb, cmyk, hex, x, y }
       }
     });
   }
@@ -84,6 +86,9 @@ class CmykSlidersCntr extends Component {
       // Color values
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
       const cmyk = rgbToCMYK(rgb.r, rgb.g, rgb.b);
+      cmyk.r = rgb.r;
+      cmyk.g = rgb.g;
+      cmyk.b = rgb.b;
       const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({ 

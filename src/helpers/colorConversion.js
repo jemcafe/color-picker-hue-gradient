@@ -2,11 +2,13 @@ export const rgbToHex = (r, g, b) => (
   `#${colorToHex(r)}${colorToHex(g)}${colorToHex(b)}`
 );
 
+
 export const colorToHex = (c) => {
   // The radix is 16 for hexidecimal numbers
   const hex = c.toString(16);
   return hex.length === 1 ? "0" + hex : hex;
 }
+
 
 export const rgbToHSL = (r, g, b) => {
   // If the parameter values are out of range or not numbers, the default is returned.
@@ -66,6 +68,7 @@ export const rgbToHSL = (r, g, b) => {
   return { h: H, s: S, l: L };
 }
 
+
 export const hslToRGB = (h, s, l) => {
   // If the parameter values are out of range or not numbers, the default is returned.
   if (
@@ -118,8 +121,9 @@ export const hslToRGB = (h, s, l) => {
   return { r: RGB[0], g: RGB[1], b: RGB[2] };
 }
 
+
 export const rgbToCMYK = (r, g, b) => {
-  // The HSL values equal 0, if the parameter values are out of range or not numbers.
+  // If the parameter values are out of range or not numbers, the default is returned
   if (
     r > 255  || g > 255  || b > 255 || 
     r < 0    || g < 0    || b < 0   ||
@@ -153,6 +157,28 @@ export const rgbToCMYK = (r, g, b) => {
   return { c: CMYK[0], m: CMYK[1], y: CMYK[2], k: CMYK[3] };
 }
 
-// export const cmykToRGB = (c, m, y, k) => {
 
-// }
+export const cmykToRGB = (c, m, y, k) => {
+  // If the parameter values are out of range or not numbers, the default value is returned.
+  if (
+    c > 100  || m > 100  || y > 100 || k > 100 || 
+    c < 0    || m < 0    || y < 0   || k < 0   ||
+    isNaN(c) || isNaN(m) || isNaN(y) || isNaN(k)
+  ) return { r: 0, g: 0, b: 0 };
+
+  // The CMYK values are converted to decimals
+  const C = c * 0.01;
+  const M = m * 0.01;
+  const Y = y * 0.01;
+  const K = k * 0.01;
+  // The RGB values are calculated from the CMY respectively
+  let RGB = [C, M, Y];
+
+  // RGB
+  RGB = RGB.map(e => {
+    // Formula for RGB values
+    return Math.round(255 * (1 - e) * (1 - K));
+  });
+  
+  return { r: RGB[0], g: RGB[1], b: RGB[2] };
+}

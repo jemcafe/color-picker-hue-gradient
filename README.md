@@ -1,4 +1,4 @@
-## Color Picker
+## Color Pickers
 
 Different kinds of color pickers.
 

@@ -16,16 +16,16 @@ class CymkSliders extends Component {
             background: `rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`
          },
          cGradient: {
-            background:`linear-gradient(90deg, rgb(255, ${color.cmyk.g}, ${color.cmyk.b}), rgb(${color.cmyk.r}, ${color.cmyk.g}, ${color.cmyk.b})`
+            background:`linear-gradient(90deg, rgb(255, ${color.cmyk.g}, ${color.cmyk.b}), rgb(0, ${color.cmyk.g}, ${color.cmyk.b})`
          },
          mGradient: {
-            background:`linear-gradient(90deg, rgb(${color.cmyk.r}, 255, ${color.cmyk.b}), rgb(${color.cmyk.r}, ${color.cmyk.g}, ${color.cmyk.b})`
+            background:`linear-gradient(90deg, rgb(${color.cmyk.r}, 255, ${color.cmyk.b}), rgb(${color.cmyk.r}, 0, ${color.cmyk.b})`
          },
          yGradient: {
-            background:`linear-gradient(90deg, rgb(${color.cmyk.r}, ${color.cmyk.g}, 255), rgb(${color.cmyk.r}, ${color.cmyk.g}, ${color.cmyk.b})`
+            background:`linear-gradient(90deg, rgb(${color.cmyk.r}, ${color.cmyk.g}, 255), rgb(${color.cmyk.r}, ${color.cmyk.g}, 0)`
          },
          kGradient: {
-            background:`linear-gradient(90deg, rgb(255, 255, 255), rgb(0, 0, 0))`
+            background:`linear-gradient(90deg, rgb(${color.cmyk.r}, ${color.cmyk.g}, ${color.cmyk.b}), rgb(0, 0, 0))`
          }
       }
       
