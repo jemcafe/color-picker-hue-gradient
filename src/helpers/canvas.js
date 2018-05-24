@@ -1,4 +1,4 @@
-export const getPosition = (canvas, e, initial = {x:0, y:0}) => {
+export const getPosition = (canvas, e, initial = {x:0,y:0}) => {
    let x = initial.x;
    let y = initial.y;
 
