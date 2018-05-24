@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class HslGradient extends Component {
+class HslSliders extends Component {
 
    componentDidMount () {
       this.props.initCanvas(this.refs.canvas);
@@ -53,17 +53,17 @@ class HslGradient extends Component {
                <div>
                   <div className="h-gradient" style={ styles.hGradient }></div>
                   <input className="slider" type="range" min="0" max="360" value={color.hsl.h} onChange={(e) => handleColorChange('h', e)}/>
-                  <input className="number-input" value={color.hsl.h} onChange={(e) => handleColorChange('h', e)}/>
+                  <input value={color.hsl.h} onChange={(e) => handleColorChange('h', e)}/>
                </div>
                <div>
                   <div className="s-gradient" style={ styles.sGradient }></div>
                   <input className="slider" type="range" min="0" max="100" value={color.hsl.s} onChange={(e) => handleColorChange('s', e)}/>
-                  <input className="number-input" value={color.hsl.s} onChange={(e) => handleColorChange('s', e)}/>
+                  <input value={color.hsl.s} onChange={(e) => handleColorChange('s', e)}/>
                </div>
                <div>
                   <div className="l-gradient" style={ styles.lGradient }></div>
                   <input className="slider" type="range" min="0" max="100" value={color.hsl.l} onChange={(e) => handleColorChange('l', e)}/>
-                  <input className="number-input" value={color.hsl.l} onChange={(e) => handleColorChange('l', e)}/>
+                  <input value={color.hsl.l} onChange={(e) => handleColorChange('l', e)}/>
                </div>
             </div>
 
@@ -72,7 +72,7 @@ class HslGradient extends Component {
    }
 }
 
-HslGradient.propTypes = {
+HslSliders.propTypes = {
    color: PropTypes.object.isRequired,
    focus: PropTypes.bool.isRequired,
    initCanvas: PropTypes.func.isRequired,
@@ -82,4 +82,4 @@ HslGradient.propTypes = {
    handleColorChange: PropTypes.func.isRequired,
  }
 
-export default HslGradient;
+export default HslSliders;

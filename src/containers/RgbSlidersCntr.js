@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { rgbToHex, rgbToHSL, hslToRGB } from '../helpers/colorConverters';
-import HslGradient from '../components/HslGradient';
+import { rgbToHex } from '../helpers/colorConverters';
+import RgbSliders from '../components/RgbSliders';
 
-class HslGradientCntr extends Component {
+class RgbSlidersCntr extends Component {
   constructor () {
     super();
     this.state = {
       color: {
         rgb: { r: 255, g: 0, b: 0 },
-        hsl: { h: 0, s: 100, l: 50 },
         hex: '#ff0000',
         x: 0,
         y: 100
@@ -33,23 +32,20 @@ class HslGradientCntr extends Component {
   handleColorChange = (property, e) => {
     const value = +e.target.value;
 
-    // if ( !isNaN(value) ) {
-      this.setState(prevState => {
-        const hsl = {
-          h: (property === 'h' && value <= 360) ? value : prevState.color.hsl.h,
-          s: (property === 's' && value <= 100) ? value : prevState.color.hsl.s,
-          l: (property === 'l' && value <= 100) ? value : prevState.color.hsl.l
-        }
-        const rgb = hslToRGB(hsl.h, hsl.s, hsl.l);
-        const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
-        const x = prevState.color.x;
-        const y = prevState.color.y;
+   this.setState(prevState => {
+      const rgb = {
+         r: property === 'r' ? value : prevState.color.rgb.r,
+         g: property === 'g' ? value : prevState.color.rgb.g,
+         b: property === 'b' ? value : prevState.color.rgb.b
+      };
+      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const x = prevState.color.x;
+      const y = prevState.color.y;
 
-        return {
-          color: { rgb, hsl, hex, x, y }
-        }
-      });
-    // }
+      return {
+         color: { rgb, hex, x, y }
+      }
+   });
   }
 
   engage = (canvas, e) => {
@@ -80,11 +76,10 @@ class HslGradientCntr extends Component {
 
       // Color values
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
-      const hsl = rgbToHSL(rgb.r, rgb.g, rgb.b);
       const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({ 
-        color: { rgb, hsl, hex, x, y }
+        color: { rgb, hex, x, y }
       });
     }
   }
@@ -100,36 +95,33 @@ class HslGradientCntr extends Component {
 
     // Color gradient
     const colorGrd = context.createLinearGradient(0, 0, canvas.width, 0);
-    const deg = [0, ...new Array(6)];
-
-    // The degrees of each color in the gradient
-    for (let i = 1; i < deg.length; i++) {
-      deg[i] = +((i+1)/deg.length).toFixed(2);
-    }
-
+    const deg = new Array(7);
+    
     // The gradient colors
     for (let i = 0; i < deg.length; i++) {
+      // The degrees of each color in the gradient (from 0 to 1)
+      const degrees = +((i + 1)/deg.length).toFixed(2);
+      deg[i] = i === 0 ? 0.01 : i === deg.length-1 ? 0.99 : degrees;
+
+      // RGB color values
       const r = (i === 0 || i === 1 || i === 5 || i === 6) ? 255 : 0;
       const g = (i === 1 || i === 2 || i === 3) ? 255 : 0;
       const b = (i === 3 || i === 4 || i === 5) ? 255 : 0;
+
+      // Gradient color
       colorGrd.addColorStop(deg[i], `rgb(${r},${g},${b})`);
     }
     
     context.fillStyle = colorGrd;
     context.fillRect(0, 0, canvas.width, canvas.height);
     
-    // White gradient
-    const whiteGrd = context.createLinearGradient(0, canvas.height/2, 0, 0);
-    whiteGrd.addColorStop(0.01, "transparent");
-    whiteGrd.addColorStop(0.99, "#fff");
-    context.fillStyle = whiteGrd;
-    context.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Black gradient
-    const blackGrd = context.createLinearGradient(0, canvas.height, 0, canvas.height/2);
-    blackGrd.addColorStop(0.01, "#000");
-    blackGrd.addColorStop(0.99, "transparent");
-    context.fillStyle = blackGrd;
+    // Black and white gradient
+    const BWGrd = context.createLinearGradient(0, 0, 0, canvas.height);
+    BWGrd.addColorStop(0.01, "#fff");
+    BWGrd.addColorStop(0.49, "transparent");
+    BWGrd.addColorStop(0.51, "transparent");
+    BWGrd.addColorStop(1, "#000");
+    context.fillStyle = BWGrd;
     context.fillRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -141,18 +133,14 @@ class HslGradientCntr extends Component {
     const pos = this.getPosition(canvas, e);
     const x = pos.x;
     const y = pos.y;
-    const radius = 5; // arc radius
-
-    // These values are used for the strokeStyle condition
-    const xLimit = Math.floor( (canvas.width-1)/2 );
-    const yLimit = Math.floor( canvas.height/3 );
+    const radius = 5;
     
     // The fourth character in the hexidecimal string is tested to see if the gradient hue is one of the lighter colors (colors between orange and light blue)
     const { color: { hex } } = this.state;
     const hexCheck = /^([a-f])$/.test( hex[3] );
 
     // The color is black if the condition is met and white if it's not.
-    const color = ((x < xLimit || hexCheck) && y < yLimit) ? '#000' : '#fff';
+    const color = hexCheck ? '#000' : '#fff';
 
     // Circle
     context.arc(x, y, radius, 0, 2 * Math.PI);
@@ -186,7 +174,7 @@ class HslGradientCntr extends Component {
     const { color, focus } = this.state;
 
     return (
-      <HslGradient
+      <RgbSliders
          color={ color }
          focus={ focus }
          initCanvas={ this.initCanvas }
@@ -198,4 +186,4 @@ class HslGradientCntr extends Component {
   }
 }
 
-export default HslGradientCntr;
+export default RgbSlidersCntr;

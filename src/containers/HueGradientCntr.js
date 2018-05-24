@@ -79,44 +79,33 @@ class HueGradientCntr extends Component {
 
   handleHueChange = (canvas, e) => {
     const value = +e.target.value;               // The string is converted to a number
-    const rgb = new Array(3);                    // An array for the rgb values
+    let rgb = [0, 0, 0];                    // An array for the rgb values
     const range = new Array(rgb.length * 2 + 1); // red, green, and blue increases to 255 and decreases to 0  (3 * 2).  1 is added for when the color goes back to red.
-    const index = new Array(rgb.length);         // rgb index values for the range array
-    const indexStart = [4, 5, 1, 2];             // Initial index values for the range array
 
     // Range values. RGB values range from 0 to 255.
-    for (let i = 0; i < range.length; i++) {
-      range[i] = i * 255;
-    }
+    for (let i = 0; i < range.length; i++) range[i] = i * 255;
 
-    // The index values for the rgb ranges. If an index is greater than the length of range, the value is 0, so it loops around.
+    // RGB values
     const l = range.length-1;
-    for (let i = 0; i < index.length; i++) {
-      index[i] = indexStart.map((e, k) => {
-        const j = (i * 2) + e;
-        return ((k === 0 && j >= l) || j > l) ? j - l : j;
-      });
-    }
+    rgb = rgb.map((e, i) => {
+      // Function expression for the ranges's index value. The value loops around.
+      const index = (offset, j = (i * 2 + offset)) => (i === rgb.length-1 && j === l) ? l : (j % l);
 
-    // The rgb values change within specific ranges.
-    for (let i = 0; i < rgb.length; i++) {
-      const j = index[i];
-      rgb[i] = (value >= range[j[0]] && value < range[j[1]]+1) 
-             ? (value - range[j[0]])
-             : (value >= range[j[1]] && value < range[j[2]]+1) 
-               || (i === 0 && (value >= range[5] || (value >= range[0] && value < range[1]+1))) // When the color goes back to red
-             ? range[1] 
-             : (value >= range[j[2]] && value < range[j[3]]+1) 
-             ? (range[j[3]] - value) 
-             : range[0];
-    }
+      // The rgb values change if the input value is within the specific ranges
+      return (value >= range[index(4)] && value < range[index(5)]+1) 
+           ? (value - range[index(4)]) 
+           : (value >= range[index(5)] && value < range[index(1)]+1) ||
+             (i === 0 && (value >= range[5] || (value >= range[0] && value < range[1]+1))) // When the color goes back to red
+           ? range[1] 
+           : (value >= range[index(1)] && value < range[index(2)]+1) 
+           ? (range[index(2)] - value) 
+           : range[0];
+    });
 
     const r = rgb[0], 
           g = rgb[1], 
           b = rgb[2], 
           hex = rgbToHex(r, g, b);
-
-    console.log( 'handleHueChange', { r, g, b, hex });
 
     this.setState({ 
       gradientHue: { r, g, b, hex } 
@@ -139,7 +128,7 @@ class HueGradientCntr extends Component {
     // White linear gradient
     const whiteGrd = context.createLinearGradient(0, 0, canvas.width, 0);
     whiteGrd.addColorStop(0, "#fff");
-    whiteGrd.addColorStop(1, hex);
+    whiteGrd.addColorStop(0.99, hex);
     context.fillStyle = whiteGrd;
     context.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -159,7 +148,7 @@ class HueGradientCntr extends Component {
     const pos = this.getPosition(canvas, e);
     const x = pos.x;
     const y = pos.y;
-    const radius = 5; // arc radius
+    const radius = 5;
 
     // These values are used for the strokeStyle condition
     const xLimit = Math.floor( (canvas.width-1)/2 );
