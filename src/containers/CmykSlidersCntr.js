@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { rgbToHex, rgbToCMYK } from '../helpers/colorConverters';
+import { rgbToHex, rgbToCMYK } from '../helpers/colorConversion';
+import { getPosition } from '../helpers/canvas';
 import CmykSliders from '../components/CmykSliders';
 
 class CmykSlidersCntr extends Component {
@@ -8,7 +9,7 @@ class CmykSlidersCntr extends Component {
     this.state = {
       color: {
         rgb: { r: 255, g: 0, b: 0 },
-        cmyk: { r: 255, g: 0, b: 0, c: 0, m: 100, y: 100, k: 0 },
+        cmyk: { c: 0, m: 100, y: 100, k: 0 },
         hex: '#ff0000',
         x: 0,
         y: 100
@@ -25,7 +26,7 @@ class CmykSlidersCntr extends Component {
     canvas.width = (y * 2) + 1;
     canvas.height = y * 2;
 
-    console.log(canvas.getContext('2d'));
+    console.log('CMYK canvas', canvas.getContext('2d'));
 
     this.setCanvas(canvas);
   }
@@ -40,6 +41,7 @@ class CmykSlidersCntr extends Component {
          y: (property === 'y' && value <= 100) ? value : prevState.color.cmyk.y,
          k: (property === 'k' && value <= 100) ? value : prevState.color.cmyk.k
       }
+      // const rgb = cmykToRGB(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
       const rgb = prevState.color.rgb;
       const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
       const x = prevState.color.x;
@@ -70,7 +72,9 @@ class CmykSlidersCntr extends Component {
       const context = canvas.getContext('2d');
 
       // Color location (mouse location)
-      const pos = this.getPosition(canvas, e);
+      const { color } = this.state;
+      const initialPos = { x: color.x, y: color.y };
+      const pos = getPosition(canvas, e, initialPos);
       const x = pos.x;
       const y = pos.y;
       
@@ -134,44 +138,27 @@ class CmykSlidersCntr extends Component {
     const context = canvas.getContext('2d');
 
     // Arc values
-    const pos = this.getPosition(canvas, e);
+    const { color } = this.state;
+    const initialPos = { x: color.x, y: color.y };
+    const pos = getPosition(canvas, e, initialPos);
     const x = pos.x;
     const y = pos.y;
     const radius = 5;
     
     // The fourth character in the hexidecimal string is tested to see if the gradient hue is one of the lighter colors (colors between orange and light blue)
-    const { color: { hex } } = this.state;
+    const {color:{ hex }} = this.state;
     const hexCheck = /^([a-f])$/.test( hex[3] );
 
     // The color is black if the condition is met and white if it's not.
-    const color = hexCheck ? '#000' : '#fff';
+    const strokeColor = hexCheck ? '#000' : '#fff';
 
     // Circle
     context.arc(x, y, radius, 0, 2 * Math.PI);
-    context.strokeStyle = color;
+    context.strokeStyle = strokeColor;
     context.stroke();
 
     // The path is reset, so the shape is not one long path
     context.beginPath();
-  }
-
-  getPosition = (canvas, e) => {
-    const { color: c } = this.state;
-    let x = c.x;
-    let y = c.y;
-
-    if (e) {
-      // If the event's coordinate values are undefined, then values from state are used.
-      // Subtracting the canvas offset from the event coordinates get the coordinates relative to the canvas, which is needed to position the circle when the mouse is out the canvas.
-      x = e.clientX ? e.clientX - canvas.offsetLeft : x;
-      y = e.clientY ? e.clientY - canvas.offsetTop  : y;
-
-      // Boundaries so the circle stays with in the canvas
-      x = x < 0 ? 0 : x > canvas.width-1 ? canvas.width-1 : x;
-      y = y < 0 ? 0 : y > canvas.height  ? canvas.height  : y;
-    }
-    
-    return { x, y };
   }
 
   render() {

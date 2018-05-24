@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { rgbToHex } from '../helpers/colorConverters';
+import { rgbToHex } from '../helpers/colorConversion';
+import { getPosition } from '../helpers/canvas';
 import RgbSliders from '../components/RgbSliders';
 
 class RgbSlidersCntr extends Component {
@@ -24,7 +25,7 @@ class RgbSlidersCntr extends Component {
     canvas.width = (y * 2) + 1;
     canvas.height = y * 2;
 
-    console.log(canvas.getContext('2d'));
+    console.log('RGB canvas', canvas.getContext('2d'));
 
     this.setCanvas(canvas);
   }
@@ -67,7 +68,9 @@ class RgbSlidersCntr extends Component {
       const context = canvas.getContext('2d');
 
       // Color location (mouse location)
-      const pos = this.getPosition(canvas, e);
+      const { color } = this.state;
+      const initialPos = { x: color.x, y: color.y };
+      const pos = getPosition(canvas, e, initialPos);
       const x = pos.x;
       const y = pos.y;
       
@@ -130,7 +133,9 @@ class RgbSlidersCntr extends Component {
     const context = canvas.getContext('2d');
 
     // Arc values
-    const pos = this.getPosition(canvas, e);
+    const { color } = this.state;
+    const initialPos = { x: color.x, y: color.y };
+    const pos = getPosition(canvas, e, initialPos);
     const x = pos.x;
     const y = pos.y;
     const radius = 5;
@@ -140,34 +145,15 @@ class RgbSlidersCntr extends Component {
     const hexCheck = /^([a-f])$/.test( hex[3] );
 
     // The color is black if the condition is met and white if it's not.
-    const color = hexCheck ? '#000' : '#fff';
+    const strokeColor = hexCheck ? '#000' : '#fff';
 
     // Circle
     context.arc(x, y, radius, 0, 2 * Math.PI);
-    context.strokeStyle = color;
+    context.strokeStyle = strokeColor;
     context.stroke();
 
     // The path is reset, so the shape is not one long path
     context.beginPath();
-  }
-
-  getPosition = (canvas, e) => {
-    const { color: c } = this.state;
-    let x = c.x;
-    let y = c.y;
-
-    if (e) {
-      // If the event's coordinate values are undefined, then values from state are used.
-      // Subtracting the canvas offset from the event coordinates get the coordinates relative to the canvas, which is needed to position the circle when the mouse is out the canvas.
-      x = e.clientX ? e.clientX - canvas.offsetLeft : x;
-      y = e.clientY ? e.clientY - canvas.offsetTop  : y;
-
-      // Boundaries so the circle stays with in the canvas
-      x = x < 0 ? 0 : x > canvas.width-1 ? canvas.width-1 : x;
-      y = y < 0 ? 0 : y > canvas.height  ? canvas.height  : y;
-    }
-    
-    return { x, y };
   }
 
   render() {
