@@ -1,6 +1,6 @@
-## Sketcher
+## Color Picker
 
-An app for sketching images.
+Different kinds of color pickers.
 
 ### Built with
 
