@@ -141,8 +141,7 @@ class RgbSlidersCntr extends Component {
     const radius = 5;
     
     // The fourth character in the hexidecimal string is tested to see if the gradient hue is one of the lighter colors (colors between orange and light blue)
-    const { color: { hex } } = this.state;
-    const hexCheck = /^([a-f])$/.test( hex[3] );
+    const hexCheck = /^([a-f])$/.test( c.hex[3] );
 
     // The color is black if the condition is met and white if it's not.
     const strokeColor = hexCheck ? '#000' : '#fff';

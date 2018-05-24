@@ -136,9 +136,8 @@ class CmykSlidersCntr extends Component {
     // Canvas Context
     const context = canvas.getContext('2d');
 
-    const { color: c } = this.state;
-
     // Arc values
+    const { color: c } = this.state;
     const initialPos = { x: c.x, y: c.y };
     const pos = getPosition(canvas, e, initialPos);
     const x = pos.x;
