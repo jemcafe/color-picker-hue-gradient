@@ -56,8 +56,8 @@ class HueGradientCntr extends Component {
       const context = canvas.getContext('2d');
 
       // Color location (mouse location)
-      const { color } = this.state;
-      const initialPos = { x: color.x, y: color.y };
+      const { color: c } = this.state;
+      const initialPos = { x: c.x, y: c.y };
       const pos = getPosition(canvas, e, initialPos);
       const x = pos.x;
       const y = pos.y;
@@ -144,8 +144,8 @@ class HueGradientCntr extends Component {
     const context = canvas.getContext('2d');
 
     // Arc values
-    const { color } = this.state;
-    const initialPos = { x: color.x, y: color.y };
+    const { color: c } = this.state;
+    const initialPos = { x: c.x, y: c.y };
     const pos = getPosition(canvas, e, initialPos);
     const x = pos.x;
     const y = pos.y;

@@ -71,8 +71,8 @@ class CmykSlidersCntr extends Component {
       const context = canvas.getContext('2d');
 
       // Color location (mouse location)
-      const { color } = this.state;
-      const initialPos = { x: color.x, y: color.y };
+      const { color: c } = this.state;
+      const initialPos = { x: c.x, y: c.y };
       const pos = getPosition(canvas, e, initialPos);
       const x = pos.x;
       const y = pos.y;
@@ -136,17 +136,17 @@ class CmykSlidersCntr extends Component {
     // Canvas Context
     const context = canvas.getContext('2d');
 
+    const { color: c } = this.state;
+
     // Arc values
-    const { color } = this.state;
-    const initialPos = { x: color.x, y: color.y };
+    const initialPos = { x: c.x, y: c.y };
     const pos = getPosition(canvas, e, initialPos);
     const x = pos.x;
     const y = pos.y;
     const radius = 5;
     
     // The fourth character in the hexidecimal string is tested to see if the gradient hue is one of the lighter colors (colors between orange and light blue)
-    const {color:{ hex }} = this.state;
-    const hexCheck = /^([a-f])$/.test( hex[3] );
+    const hexCheck = /^([a-f])$/.test( c.hex[3] );
 
     // The color is black if the condition is met and white if it's not.
     const strokeColor = hexCheck ? '#000' : '#fff';
