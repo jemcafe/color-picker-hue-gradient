@@ -13,9 +13,9 @@ export const setGradientColor = (canvas) => {  // The default hex color is the c
     deg[i] = i === 0 ? 0.01 : i === deg.length-1 ? 0.99 : degrees;
 
     // RGB values
-    const r = (i === 0 || i === 1 || i === 5 || i === 6) ? 255 : 0;
-    const g = (i === 1 || i === 2 || i === 3) ? 255 : 0;
-    const b = (i === 3 || i === 4 || i === 5) ? 255 : 0;
+    const r = (i <= 1 || i >= 5) ? 255 : 0;
+    const g = (i >= 1 && i <= 3) ? 255 : 0;
+    const b = (i >= 3 && i <= 5) ? 255 : 0;
 
     // Gradient color
     colorGrd.addColorStop(deg[i], `rgb(${r},${g},${b})`);
