@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { rgbToHex, rgbToCMYK, cmykToRGB } from '../helpers/colorConversion';
+import { RGBtoHex, RGBtoCMYK, CMYKtoRGB } from '../helpers/colorConversion';
 import { setGradientColor, getPosition } from '../helpers/canvas';
 import CmykSliders from '../components/CmykSliders';
 
@@ -41,8 +41,8 @@ class CmykSlidersCntr extends Component {
         y: (property === 'y' && value <= 100) ? value : prevState.color.cmyk.y,
         k: (property === 'k' && value <= 100) ? value : prevState.color.cmyk.k
       }
-      const rgb = cmykToRGB(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const rgb = CMYKtoRGB(cmyk.c, cmyk.m, cmyk.y, cmyk.k);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
       const x = prevState.color.x;
       const y = prevState.color.y;
 
@@ -82,8 +82,8 @@ class CmykSlidersCntr extends Component {
 
       // Color values
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
-      const cmyk = rgbToCMYK(rgb.r, rgb.g, rgb.b);
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const cmyk = RGBtoCMYK(rgb.r, rgb.g, rgb.b);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({ 
         color: { rgb, cmyk, hex, x, y }

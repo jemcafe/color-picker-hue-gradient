@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { rgbToHex } from '../helpers/colorConversion';
+import { RGBtoHex } from '../helpers/colorConversion';
 import { getPosition } from '../helpers/canvas';
 import HueGradient from '../components/HueGradient';
 
@@ -66,7 +66,7 @@ class HueGradientCntr extends Component {
       const imgData = context.getImageData(x, y, 1, 1).data;  // .getImageData(x, y, width, height)
       
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
 
       console.log('getColor', { rgb, hex, x, y });
 
@@ -104,7 +104,7 @@ class HueGradientCntr extends Component {
     const r = rgb[0], 
           g = rgb[1], 
           b = rgb[2], 
-          hex = rgbToHex(r, g, b);
+          hex = RGBtoHex(r, g, b);
 
     this.setState({ 
       gradientHue: { r, g, b, hex } 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { rgbToHex } from '../helpers/colorConversion';
+import { RGBtoHex, LABtoRGB } from '../helpers/colorConversion';
 import { setGradientColor, getPosition } from '../helpers/canvas';
 import LabSliders from '../components/LabSliders';
 
@@ -8,8 +8,10 @@ class LabSlidersCntr extends Component {
     super();
     this.state = {
       color: {
-        rgb: { r: 0, g: 0, b: 0 },
-        lab: { l: 0, a: 0, b: 0 },
+        // rgb: { r: 0, g: 0, b: 0 },
+        rgb: LABtoRGB(50, 0, 0),
+        // lab: { l: 0, a: 0, b: 0 },
+        lab: { l: 50, a: 0, b: 0 },
         hex: '#000000',
         x: 0,
         y: 200
@@ -36,18 +38,18 @@ class LabSlidersCntr extends Component {
 
     this.setState(prevState => {
       const lab = {
-         l: property === 'l' ? value : prevState.color.lab.r,
-         a: property === 'a' ? value : prevState.color.lab.g,
+         l: property === 'l' ? value : prevState.color.lab.l,
+         a: property === 'a' ? value : prevState.color.lab.a,
          b: property === 'b' ? value : prevState.color.lab.b
       };
-      // const rgb = labToRGB(lab.l, lab.a, lab.b);
-      const rgb = prevState.color.rgb;
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const rgb = LABtoRGB(lab.l, lab.a, lab.b);
+      console.log('RGB', rgb);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
       const x = prevState.color.x;
       const y = prevState.color.y;
 
       return {
-         color: { rgb, hex, x, y }
+         color: { rgb, lab, hex, x, y }
       }
     });
   }
@@ -82,9 +84,9 @@ class LabSlidersCntr extends Component {
 
       // Color values
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
-      // const lab = rgbToLab(rgb.r, rgb.g, rgb.b);
+      // const lab = RGBtoLab(rgb.r, rgb.g, rgb.b);
       const lab = { l: 0, a: 0, b: 0 };
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({ 
         color: { rgb, lab, hex, x, y }

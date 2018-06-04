@@ -63,7 +63,7 @@ input {
     height: 200px;
     background: linear-gradient(0deg, red, yellow, lime, cyan, blue, magenta, red); }
 
-.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
+.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
   width: 180px; }
 
 .hsl-sliders {
@@ -96,7 +96,7 @@ input {
       height: 0.5em;
       background: pink; }
 
-.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
+.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
   width: 180px; }
 
 .rgb-sliders {
@@ -129,7 +129,7 @@ input {
       height: 0.5em;
       background: pink; }
 
-.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
+.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
   width: 180px; }
 
 .cmyk-sliders {
@@ -162,7 +162,7 @@ input {
       height: 0.5em;
       background: pink; }
 
-.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
+.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
   width: 180px; }
 
 .lab-sliders {
@@ -191,6 +191,6 @@ input {
       display: flex;
       flex-direction: column;
       margin: 4px 0; }
-    .lab-sliders .sliders .r-gradient, .lab-sliders .sliders .g-gradient, .lab-sliders .sliders .b-gradient {
+    .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient {
       height: 0.5em;
       background: pink; }

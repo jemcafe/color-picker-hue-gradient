@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class RgbSliders extends Component {
+class LabSliders extends Component {
 
    componentDidMount () {
       this.props.initCanvas(this.refs.canvas);
@@ -16,13 +16,23 @@ class RgbSliders extends Component {
             background: `rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`
          },
          lGradient: {
-            background:`linear-gradient(90deg, rgb(0, 0, 0), rgb(255, 255, 255)`
+            background:`linear-gradient(90deg, 
+            rgb(${0}, ${0}, ${0}), 
+            rgb(${255}, ${255}, ${255})
+          )`
          },
          aGradient: {
-            background:`linear-gradient(90deg, rgb(${0}, ${0}, ${0}), rgb(${0}, ${0}, ${0})`
+            background:`linear-gradient(90deg, 
+            rgb(${0}, ${color.rgb.g}, ${color.rgb.b}), 
+            rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}), 
+            rgb(${color.rgb.r}, ${0}, ${color.rgb.b})
+          )`
          },
          bGradient: {
-            background:`linear-gradient(90deg, rgb(${0}, ${0}, ${0}), rgb(${0}, ${0}, ${0})`
+            background:`linear-gradient(90deg, 
+            rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}), 
+            rgb(${color.rgb.r}, ${color.rgb.b}, ${0})
+          )`
          }
       }
       
@@ -48,12 +58,12 @@ class RgbSliders extends Component {
                </div>
                <div>
                   <div className="a-gradient" style={ styles.aGradient }></div>
-                  <input className="slider" type="range" min="0" max="255" value={color.lab.a} onChange={(e) => handleColorChange('a', e)}/>
+                  <input className="slider" type="range" min="-128" max="127" value={color.lab.a} onChange={(e) => handleColorChange('a', e)}/>
                   <input value={color.lab.a} onChange={(e) => handleColorChange('a', e)}/>
                </div>
                <div>
                   <div className="b-gradient" style={ styles.bGradient }></div>
-                  <input className="slider" type="range" min="0" max="255" value={color.lab.b} onChange={(e) => handleColorChange('b', e)}/>
+                  <input className="slider" type="range" min="-128" max="127" value={color.lab.b} onChange={(e) => handleColorChange('b', e)}/>
                   <input value={color.lab.b} onChange={(e) => handleColorChange('b', e)}/>
                </div>
             </div>
@@ -63,7 +73,7 @@ class RgbSliders extends Component {
    }
 }
 
-RgbSliders.propTypes = {
+LabSliders.propTypes = {
    color: PropTypes.object.isRequired,
    focus: PropTypes.bool.isRequired,
    initCanvas: PropTypes.func.isRequired,
@@ -73,4 +83,4 @@ RgbSliders.propTypes = {
    handleColorChange: PropTypes.func.isRequired,
  }
 
-export default RgbSliders;
+export default LabSliders;

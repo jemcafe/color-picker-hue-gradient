@@ -1,0 +1,50 @@
+%sliderWidth {
+   width: 180px;
+}
+
+.lab-sliders {
+   display: flex;
+   align-items: flex-start;
+   background: lightgrey;
+
+   .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      width: 100vw;
+      height: 100vh;
+      background: #f6ffc0;
+      opacity: 0.5;
+   }
+
+   .color {
+      border: 1px solid #000;
+      div {
+         width: 1em;
+         height: 1em;
+         border: 1px solid #fff;
+      }
+   }
+
+   .sliders {
+      display: flex;
+      flex-direction: column;
+
+      > div {
+         display: flex;
+         flex-direction: column;
+         margin: 4px 0;
+      }
+
+      .l-gradient, .a-gradient, .b-gradient {
+         @extend %sliderWidth;
+         height: 0.5em;
+         background: pink;
+      }
+
+      .slider {
+         @extend %sliderWidth;
+      }
+   }
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { rgbToHex } from '../helpers/colorConversion';
+import { RGBtoHex } from '../helpers/colorConversion';
 import { setGradientColor, getPosition } from '../helpers/canvas';
 import RgbSliders from '../components/RgbSliders';
 
@@ -39,7 +39,7 @@ class RgbSlidersCntr extends Component {
          g: property === 'g' ? value : prevState.color.rgb.g,
          b: property === 'b' ? value : prevState.color.rgb.b
       };
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
       const x = prevState.color.x;
       const y = prevState.color.y;
 
@@ -79,7 +79,7 @@ class RgbSlidersCntr extends Component {
 
       // Color values
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({ 
         color: { rgb, hex, x, y }

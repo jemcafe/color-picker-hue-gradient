@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { rgbToHex, rgbToHSL, hslToRGB } from '../helpers/colorConversion';
+import { RGBtoHex, RGBtoHSL, HSLtoRGB } from '../helpers/colorConversion';
 import { setGradientColor, getPosition } from '../helpers/canvas';
 import HslSliders from '../components/HslSliders';
 
@@ -40,8 +40,8 @@ class HslSlidersCntr extends Component {
         s: (property === 's' && value <= 100) ? value : prevState.color.hsl.s,
         l: (property === 'l' && value <= 100) ? value : prevState.color.hsl.l
       }
-      const rgb = hslToRGB(hsl.h, hsl.s, hsl.l);
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const rgb = HSLtoRGB(hsl.h, hsl.s, hsl.l);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
       const x = prevState.color.x;
       const y = prevState.color.y;
 
@@ -81,8 +81,8 @@ class HslSlidersCntr extends Component {
 
       // Color values
       const rgb = { r: imgData[0], g: imgData[1], b: imgData[2] };
-      const hsl = rgbToHSL(rgb.r, rgb.g, rgb.b);
-      const hex = rgbToHex(rgb.r, rgb.g, rgb.b);
+      const hsl = RGBtoHSL(rgb.r, rgb.g, rgb.b);
+      const hex = RGBtoHex(rgb.r, rgb.g, rgb.b);
 
       this.setState({ 
         color: { rgb, hsl, hex, x, y }
