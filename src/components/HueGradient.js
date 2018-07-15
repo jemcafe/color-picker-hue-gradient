@@ -21,7 +21,7 @@ class HueGradient extends Component {
       <div className="hue-gradient">
 
         { focus &&
-        <div className="overlay"
+        <div className="focus-overlay"
           onMouseMove={(e) => getColor(this.refs.canvas, e)}
           onMouseUp={() => disengage(this.refs.canvas)}
           onMouseLeave={() => disengage(this.refs.canvas)}>

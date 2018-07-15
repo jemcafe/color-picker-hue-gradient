@@ -12,13 +12,14 @@
 /* -------------------------- */
 /*  MODULES                   */
 /* -------------------------- */
-// @import 'modules/';
+@import 'modules/all';
 
 /* -------------------------- */
 /*  COMPONENTS                */
 /* -------------------------- */
 @import 'components/HueGradient';
-@import 'components/HslSliders';
-@import 'components/RgbSliders';
-@import 'components/CmykSliders';
-@import 'components/LabSliders';
+// @import 'components/HslSliders';
+// @import 'components/RgbSliders';
+// @import 'components/CmykSliders';
+// @import 'components/LabSliders';
+@import 'components/Sliders';

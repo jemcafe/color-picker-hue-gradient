@@ -35,7 +35,7 @@ class HslSliders extends Component {
       <div className="hsl-sliders">
 
         { focus &&
-        <div className="overlay"
+        <div className="focus-overlay"
           onMouseMove={(e) => getColor(this.refs.canvas, e)}
           onMouseUp={() => disengage(this.refs.canvas)}
           onMouseLeave={() => disengage(this.refs.canvas)}>
@@ -47,17 +47,17 @@ class HslSliders extends Component {
           
         <div className="sliders">
           <div>
-            <div className="h-gradient" style={ styles.hGradient }></div>
+            <div className="gradient" style={ styles.hGradient }></div>
             <input className="slider" type="range" min="0" max="360" value={color.hsl.h} onChange={(e) => handleColorChange('h', e)}/>
             <input value={color.hsl.h} onChange={(e) => handleColorChange('h', e)}/>
           </div>
           <div>
-            <div className="s-gradient" style={ styles.sGradient }></div>
+            <div className="gradient" style={ styles.sGradient }></div>
             <input className="slider" type="range" min="0" max="100" value={color.hsl.s} onChange={(e) => handleColorChange('s', e)}/>
             <input value={color.hsl.s} onChange={(e) => handleColorChange('s', e)}/>
           </div>
           <div>
-            <div className="l-gradient" style={ styles.lGradient }></div>
+            <div className="gradient" style={ styles.lGradient }></div>
             <input className="slider" type="range" min="0" max="100" value={color.hsl.l} onChange={(e) => handleColorChange('l', e)}/>
             <input value={color.hsl.l} onChange={(e) => handleColorChange('l', e)}/>
           </div>

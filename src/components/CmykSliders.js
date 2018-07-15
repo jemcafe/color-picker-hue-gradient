@@ -34,7 +34,7 @@ class CymkSliders extends Component {
          <div className="cmyk-sliders">
 
             { focus &&
-            <div className="overlay"
+            <div className="focus-overlay"
                onMouseMove={(e) => getColor(this.refs.canvas, e)}
                onMouseUp={() => disengage(this.refs.canvas)}
                onMouseLeave={() => disengage(this.refs.canvas)}>
@@ -46,22 +46,22 @@ class CymkSliders extends Component {
               
             <div className="sliders">
                <div>
-                  <div className="c-gradient" style={ styles.cGradient }></div>
+                  <div className="gradient" style={ styles.cGradient }></div>
                   <input className="slider" type="range" min="0" max="100" value={color.cmyk.c} onChange={(e) => handleColorChange('c', e)}/>
                   <input value={color.cmyk.c} onChange={(e) => handleColorChange('c', e)}/>
                </div>
                <div>
-                  <div className="m-gradient" style={ styles.mGradient }></div>
+                  <div className="gradient" style={ styles.mGradient }></div>
                   <input className="slider" type="range" min="0" max="100" value={color.cmyk.m} onChange={(e) => handleColorChange('m', e)}/>
                   <input value={color.cmyk.m} onChange={(e) => handleColorChange('m', e)}/>
                </div>
                <div>
-                  <div className="y-gradient" style={ styles.yGradient }></div>
+                  <div className="gradient" style={ styles.yGradient }></div>
                   <input className="slider" type="range" min="0" max="100" value={color.cmyk.y} onChange={(e) => handleColorChange('y', e)}/>
                   <input value={color.cmyk.y} onChange={(e) => handleColorChange('y', e)}/>
                </div>
                <div>
-                  <div className="k-gradient" style={ styles.kGradient }></div>
+                  <div className="gradient" style={ styles.kGradient }></div>
                   <input className="slider" type="range" min="0" max="100" value={color.cmyk.k} onChange={(e) => handleColorChange('k', e)}/>
                   <input value={color.cmyk.k} onChange={(e) => handleColorChange('k', e)}/>
                </div>

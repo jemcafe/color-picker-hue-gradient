@@ -30,7 +30,7 @@ class RgbSliders extends Component {
          <div className="rgb-sliders">
 
             { focus &&
-            <div className="overlay"
+            <div className="focus-overlay"
                onMouseMove={(e) => getColor(this.refs.canvas, e)}
                onMouseUp={() => disengage(this.refs.canvas)}
                onMouseLeave={() => disengage(this.refs.canvas)}>
@@ -42,17 +42,17 @@ class RgbSliders extends Component {
               
             <div className="sliders">
                <div>
-                  <div className="r-gradient" style={ styles.rGradient }></div>
+                  <div className="gradient" style={ styles.rGradient }></div>
                   <input className="slider" type="range" min="0" max="255" value={color.rgb.r} onChange={(e) => handleColorChange('r', e)}/>
                   <input value={color.rgb.r} onChange={(e) => handleColorChange('r', e)}/>
                </div>
                <div>
-                  <div className="g-gradient" style={ styles.gGradient }></div>
+                  <div className="gradient" style={ styles.gGradient }></div>
                   <input className="slider" type="range" min="0" max="255" value={color.rgb.g} onChange={(e) => handleColorChange('g', e)}/>
                   <input value={color.rgb.g} onChange={(e) => handleColorChange('g', e)}/>
                </div>
                <div>
-                  <div className="b-gradient" style={ styles.bGradient }></div>
+                  <div className="gradient" style={ styles.bGradient }></div>
                   <input className="slider" type="range" min="0" max="255" value={color.rgb.b} onChange={(e) => handleColorChange('b', e)}/>
                   <input value={color.rgb.b} onChange={(e) => handleColorChange('b', e)}/>
                </div>

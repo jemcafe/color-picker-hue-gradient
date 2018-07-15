@@ -22,6 +22,16 @@ input {
 /* -------------------------- */
 /*  MODULES                   */
 /* -------------------------- */
+.focus-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  background: #c0d9ff;
+  opacity: 0.5; }
+
 /* -------------------------- */
 /*  COMPONENTS                */
 /* -------------------------- */
@@ -29,16 +39,8 @@ input {
   display: flex;
   align-items: flex-start;
   background: lightgrey; }
-  .hue-gradient .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    cursor: url("../assets/circleCursor.png") 10 10, auto;
-    background: pink;
-    opacity: 0.5; }
+  .hue-gradient .focus-overlay {
+    cursor: url("../assets/circleCursor.png") 10 10, auto; }
   .hue-gradient .color {
     border: 1px solid #000; }
     .hue-gradient .color div {
@@ -63,134 +65,50 @@ input {
     height: 200px;
     background: linear-gradient(0deg, red, yellow, lime, cyan, blue, magenta, red); }
 
-.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
+.hsl-sliders .sliders .gradient,
+.cmyk-sliders .sliders .gradient,
+.rgb-sliders .sliders .gradient,
+.lab-sliders .sliders .gradient, .hsl-sliders .sliders .slider,
+.cmyk-sliders .sliders .slider,
+.rgb-sliders .sliders .slider,
+.lab-sliders .sliders .slider {
   width: 180px; }
 
-.hsl-sliders {
-  display: flex;
-  align-items: flex-start;
-  background: lightgrey; }
-  .hsl-sliders .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    background: #c0e8ff;
-    opacity: 0.5; }
-  .hsl-sliders .color {
-    border: 1px solid #000; }
-    .hsl-sliders .color div {
-      width: 1em;
-      height: 1em;
-      border: 1px solid #fff; }
-  .hsl-sliders .sliders {
-    display: flex;
-    flex-direction: column; }
-    .hsl-sliders .sliders > div {
-      display: flex;
-      flex-direction: column;
-      margin: 4px 0; }
-    .hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient {
-      height: 0.5em;
-      background: pink; }
-
-.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
-  width: 180px; }
-
-.rgb-sliders {
-  display: flex;
-  align-items: flex-start;
-  background: lightgrey; }
-  .rgb-sliders .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    background: #c0ffce;
-    opacity: 0.5; }
-  .rgb-sliders .color {
-    border: 1px solid #000; }
-    .rgb-sliders .color div {
-      width: 1em;
-      height: 1em;
-      border: 1px solid #fff; }
-  .rgb-sliders .sliders {
-    display: flex;
-    flex-direction: column; }
-    .rgb-sliders .sliders > div {
-      display: flex;
-      flex-direction: column;
-      margin: 4px 0; }
-    .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient {
-      height: 0.5em;
-      background: pink; }
-
-.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
-  width: 180px; }
-
-.cmyk-sliders {
-  display: flex;
-  align-items: flex-start;
-  background: lightgrey; }
-  .cmyk-sliders .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    background: #dbc0ff;
-    opacity: 0.5; }
-  .cmyk-sliders .color {
-    border: 1px solid #000; }
-    .cmyk-sliders .color div {
-      width: 1em;
-      height: 1em;
-      border: 1px solid #fff; }
-  .cmyk-sliders .sliders {
-    display: flex;
-    flex-direction: column; }
-    .cmyk-sliders .sliders > div {
-      display: flex;
-      flex-direction: column;
-      margin: 4px 0; }
-    .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient {
-      height: 0.5em;
-      background: pink; }
-
-.hsl-sliders .sliders .h-gradient, .hsl-sliders .sliders .s-gradient, .hsl-sliders .sliders .l-gradient, .hsl-sliders .sliders .slider, .rgb-sliders .sliders .r-gradient, .rgb-sliders .sliders .g-gradient, .rgb-sliders .sliders .b-gradient, .rgb-sliders .sliders .slider, .cmyk-sliders .sliders .c-gradient, .cmyk-sliders .sliders .m-gradient, .cmyk-sliders .sliders .y-gradient, .cmyk-sliders .sliders .k-gradient, .cmyk-sliders .sliders .slider, .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient, .lab-sliders .sliders .slider {
-  width: 180px; }
-
+.hsl-sliders,
+.cmyk-sliders,
+.rgb-sliders,
 .lab-sliders {
   display: flex;
   align-items: flex-start;
   background: lightgrey; }
-  .lab-sliders .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    background: #f6ffc0;
-    opacity: 0.5; }
+  .hsl-sliders .color,
+  .cmyk-sliders .color,
+  .rgb-sliders .color,
   .lab-sliders .color {
     border: 1px solid #000; }
+    .hsl-sliders .color div,
+    .cmyk-sliders .color div,
+    .rgb-sliders .color div,
     .lab-sliders .color div {
       width: 1em;
       height: 1em;
       border: 1px solid #fff; }
+  .hsl-sliders .sliders,
+  .cmyk-sliders .sliders,
+  .rgb-sliders .sliders,
   .lab-sliders .sliders {
     display: flex;
     flex-direction: column; }
+    .hsl-sliders .sliders > div,
+    .cmyk-sliders .sliders > div,
+    .rgb-sliders .sliders > div,
     .lab-sliders .sliders > div {
       display: flex;
       flex-direction: column;
       margin: 4px 0; }
-    .lab-sliders .sliders .l-gradient, .lab-sliders .sliders .a-gradient, .lab-sliders .sliders .b-gradient {
+    .hsl-sliders .sliders .gradient,
+    .cmyk-sliders .sliders .gradient,
+    .rgb-sliders .sliders .gradient,
+    .lab-sliders .sliders .gradient {
       height: 0.5em;
       background: pink; }
